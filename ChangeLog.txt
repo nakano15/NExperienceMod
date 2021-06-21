@@ -1,0 +1,4 @@
+﻿Status sum variables were changed from integer type to real type.
+	That will actually generate more benefits for your characters because of that change.
+-Classic Mode
+	Neutral Damage now gains bonus based on level.

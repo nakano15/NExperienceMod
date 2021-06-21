@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{DD12DF70-6231-46FE-AB20-CDE2A52DE1B5}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NExperience</RootNamespace>
+    <AssemblyName>NExperienceMod</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
+    <Reference Include="Microsoft.Xna.Framework.Game, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
+    <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\references\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="tModLoader">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\tModLoader\tModLoader.exe</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ArcadeDungeon.cs" />
+    <Compile Include="ConfigMod.cs" />
+    <Compile Include="Effects\CloverEffect.cs" />
+    <Compile Include="ExpReceivedPopText.cs" />
+    <Compile Include="GameModeData.cs" />
+    <Compile Include="GameModeBase.cs" />
+    <Compile Include="GameModeSelector.cs" />
+    <Compile Include="GameModes\BasicRPG.cs" />
+    <Compile Include="GameModes\ClassicRPG.cs" />
+    <Compile Include="GameModes\FreeMode.cs" />
+    <Compile Include="GameModes\RaidMode.cs" />
+    <Compile Include="GameModes\RegularRPG.cs" />
+    <Compile Include="ItemMod.cs" />
+    <Compile Include="ItemStatusMod.cs" />
+    <Compile Include="Items\ResetPill.cs" />
+    <Compile Include="LevelInfoInterface.cs" />
+    <Compile Include="MainMod.cs" />
+    <Compile Include="NetPlayMod.cs" />
+    <Compile Include="NpcMod.cs" />
+    <Compile Include="NPCs\TenrohEripmav.cs" />
+    <Compile Include="NPCs\HighVoodooDemon.cs" />
+    <Compile Include="NPCs\HighDemon.cs" />
+    <Compile Include="NPCs\HugeJungleBat.cs" />
+    <Compile Include="NPCs\SkullicFighter.cs" />
+    <Compile Include="NPCs\SkullicGuardian.cs" />
+    <Compile Include="NPCs\Ghoul.cs" />
+    <Compile Include="NPCs\HellBunny.cs" />
+    <Compile Include="NPCs\FallenMummy.cs" />
+    <Compile Include="NPCs\SkullicAssassin.cs" />
+    <Compile Include="NPCs\NightBat.cs" />
+    <Compile Include="PlayerMod.cs" />
+    <Compile Include="PlayerRebirthStatus.cs" />
+    <Compile Include="PlayerStatusMod.cs" />
+    <Compile Include="ProjMod.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TileMod.cs" />
+    <Compile Include="WorldMod.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ChangeLog.txt" />
+    <Content Include="Effects\LuckyClover.png" />
+    <Content Include="Effects\VeryLuckyClover.png" />
+    <Content Include="Interface\LevelArrow.png" />
+    <Content Include="Interface\LevelReductionArrow.png" />
+    <Content Include="Interface\StatusBtn.png" />
+    <Content Include="Items\ResetPill.png" />
+    <Content Include="NPCs\NightBat.png" />
+    <Content Include="NPCs\HighVoodooDemon.png" />
+    <Content Include="NPCs\TenrohEripmav.png" />
+    <Content Include="NPCs\SkullicAssassin.png" />
+    <Content Include="NPCs\FallenMummy.png" />
+    <Content Include="NPCs\HellBunny.png" />
+    <Content Include="NPCs\Ghoul.png" />
+    <Content Include="NPCs\SkullicGuardian.png" />
+    <Content Include="NPCs\SkullicFighter.png" />
+    <Content Include="NPCs\HugeJungleBat.png" />
+    <Content Include="NPCs\HighDemon.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

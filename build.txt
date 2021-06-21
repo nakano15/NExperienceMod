@@ -1,0 +1,9 @@
+author = Nakano15
+version = 1.3.12
+displayName = NExperience Mod
+homepage = https://forums.terraria.org/index.php?threads/nexperience-mod-leveling-mod-for-terraria.83122/
+hideCode = false
+hideResources = false
+includeSource = true
+buildIgnore = *.csproj, *.user, obj\*, bin\*, .vs\*
+includePDB = true
