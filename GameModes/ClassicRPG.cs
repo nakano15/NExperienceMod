@@ -79,6 +79,8 @@ namespace NExperience.GameModes
             mod.MeleeSpeedSum += StatusMultiplier * AttackSpeedBonus;
             mod.MoveSpeedSum += StatusMultiplier * MovementSpeedBonus;
             mod.KnockbackMult += StatusMultiplier * KnockbackBonus;
+            //
+            mod.ArmorPenetrationMult += StatusProgressionPerLevel * Level;
         }
 
         public void StatusList()
@@ -330,6 +332,60 @@ namespace NExperience.GameModes
                 if (PlayersChecked > 0)
                     return (int)(LevelSum / PlayersChecked);
             }
+            else
+            {
+                switch (npc.type)
+                {
+                    case NPCID.GoblinArcher:
+                    case NPCID.GoblinPeon:
+                    case NPCID.GoblinScout:
+                    case NPCID.GoblinSorcerer:
+                    case NPCID.GoblinSummoner:
+                    case NPCID.GoblinThief:
+                    case NPCID.GoblinWarrior:
+                        if (Main.hardMode)
+                        {
+                            return Main.rand.Next(60, 68);
+                        }
+                        else
+                        {
+                            return Main.rand.Next(23, 29);
+                        }
+
+                    case NPCID.SnowBalla:
+                    case NPCID.SnowmanGangsta:
+                    case NPCID.MisterStabby:
+                        return Main.rand.Next(75, 84);
+
+                    case NPCID.PirateCaptain:
+                    case NPCID.PirateCorsair:
+                    case NPCID.PirateCrossbower:
+                    case NPCID.PirateDeadeye:
+                    case NPCID.PirateDeckhand:
+                    case NPCID.PirateShip:
+                    case NPCID.PirateShipCannon:
+                    case NPCID.Parrot:
+                        return Main.rand.Next(71, 79);
+
+                    case NPCID.MartianDrone:
+                    case NPCID.MartianEngineer:
+                    case NPCID.MartianOfficer:
+                    case NPCID.MartianProbe:
+                    case NPCID.MartianSaucer:
+                    case NPCID.MartianSaucerCannon:
+                    case NPCID.MartianSaucerCore:
+                    case NPCID.MartianSaucerTurret:
+                    case NPCID.MartianTurret:
+                    case NPCID.MartianWalker:
+                    case NPCID.BrainScrambler:
+                    case NPCID.Scutlix:
+                    case NPCID.ScutlixRider:
+                    case NPCID.GigaZapper:
+                    case NPCID.RayGunner:
+                    case NPCID.GrayGrunt:
+                        return Main.rand.Next(100, 106);
+                }
+            }
             return base.MobSpawnLevel(npc);
         }
 
@@ -465,6 +521,16 @@ namespace NExperience.GameModes
             {
                 MinLevel = 90;
                 MaxLevel = 100;
+            }
+            else if (Main.pumpkinMoon && player.ZoneOverworldHeight)
+            {
+                MinLevel = 110;
+                MaxLevel = 120;
+            }
+            else if (Main.snowMoon && player.ZoneOverworldHeight)
+            {
+                MinLevel = 120;
+                MaxLevel = 130;
             }
             else if (player.ZoneMeteor)
             {

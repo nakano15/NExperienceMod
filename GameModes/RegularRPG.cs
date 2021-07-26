@@ -876,6 +876,7 @@ namespace NExperience.GameModes
             mod.SummonCountMult += CHAOriginal * 0.005f; //0.01f
             mod.LuckFactorSum += LUK * 0.5f + Level;
             mod.CriticalDamageSum += 0.01f * (STR + DEX + INT + WIS) * 0.33f;
+            mod.ArmorPenetrationMult += (DEX + LUK * 0.33f) * TotalBonus;
             const int BoostLevelStart = 100; //150;
             if (PosLevel100Scale && Level > BoostLevelStart)
             {

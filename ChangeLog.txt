@@ -2,3 +2,11 @@
 	That will actually generate more benefits for your characters because of that change.
 -Classic Mode
 	Neutral Damage now gains bonus based on level.
+	Goblin Army, Pirate Army, Martian Madness, Frost Legion, Pumpkin Moon and Frost Moon events gained their levels.
+Added Armor Penetration modifier.
+You can now gain Luck points from:
+	Destroying Clay Pots.
+	Destroying Shadow Orbs.
+	Destroying Demon Altars.
+	Destroying Life Crystals.
+Invasions will show the current biome as contested, if you're in their range.

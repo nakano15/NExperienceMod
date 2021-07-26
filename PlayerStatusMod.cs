@@ -8,8 +8,8 @@ namespace NExperience
 {
     public class PlayerStatusMod
     {
-        public float MaxHealthMult = 1f, MaxManaMult = 1f, MeleeDamageMult = 1f, RangedDamageMult = 1f, MagicDamageMult = 1f, MinionDamageMult = 1f, NeutralDamageMult = 1f, DefenseMult = 1f, SummonCountMult = 1f, MeleeSpeedMult = 1f, KnockbackMult = 1f, MoveSpeedMult = 1f, MeleeCritMult = 1f, RangedCritMult = 1f, MagicCritMult = 1f, ManaCostMult = 1f,
-            MeleeDamageSum = 0f, RangedDamageSum = 0f, MagicDamageSum = 0f, MinionDamageSum = 0f, NeutralDamageSum = 0f, MeleeSpeedSum = 0f, MoveSpeedSum = 0f, LuckFactorSum = 0f, CriticalDamageSum = 0f, DodgeRate = 0f, KnockbackSum = 0;
+        public float MaxHealthMult = 1f, MaxManaMult = 1f, MeleeDamageMult = 1f, RangedDamageMult = 1f, MagicDamageMult = 1f, MinionDamageMult = 1f, NeutralDamageMult = 1f, DefenseMult = 1f, SummonCountMult = 1f, MeleeSpeedMult = 1f, KnockbackMult = 1f, MoveSpeedMult = 1f, MeleeCritMult = 1f, RangedCritMult = 1f, MagicCritMult = 1f, ManaCostMult = 1f, ArmorPenetrationMult = 1f,
+            MeleeDamageSum = 0f, RangedDamageSum = 0f, MagicDamageSum = 0f, MinionDamageSum = 0f, NeutralDamageSum = 0f, MeleeSpeedSum = 0f, MoveSpeedSum = 0f, LuckFactorSum = 0f, CriticalDamageSum = 0f, DodgeRate = 0f, KnockbackSum = 0, ArmorPenetrationSum = 0;
         public float MaxHealthSum = 0, MaxManaSum = 0, DefenseSum = 0, SummonCountSum = 0, MeleeCritSum = 0, RangedCritSum = 0, MagicCritSum = 0;
 
         public void ApplyStatus(Player player)
@@ -32,6 +32,8 @@ namespace NExperience
             player.magicCrit = (int)((player.magicCrit + MagicCritSum) * MagicCritMult);
             player.manaCost = player.manaCost * ManaCostMult;
             player.statDefense = (int)((player.statDefense + DefenseSum) * DefenseMult);
+            if(player.armorPenetration != 0)
+                player.armorPenetration = (int)((player.armorPenetration + ArmorPenetrationSum) * ArmorPenetrationMult);
             pm.KbMult = KnockbackMult;
             pm.KbSum = KnockbackSum;
             pm.Luck += LuckFactorSum;

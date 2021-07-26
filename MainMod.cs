@@ -21,7 +21,7 @@ namespace NExperience
         private static Dictionary<string, GameModeBase> GameModeList = new Dictionary<string, GameModeBase>();
         public static Texture2D LevelingArrow, LevelReductionArrow, StatusTextButtonTexture;
         public static int LastMinLevel, LastMaxLevel;
-        public const int ModVersion = 3;
+        public const int ModVersion = 4;
         public static int NpcProjSpawnPos = -1;
         public static float DefaultExpRate = 1f;
         public static float ExpRate = 1f;
@@ -657,6 +657,15 @@ namespace NExperience
         {
             if (InsideLihzahrdDungeon(player))
                 return "Lihzahrd Dungeon";
+            if (player.ZoneTowerNebula || player.ZoneTowerSolar || player.ZoneTowerStardust || player.ZoneTowerVortex)
+                return "Celestial Invasion";
+            if (player.ZoneOverworldHeight)
+            {
+                if (Main.pumpkinMoon)
+                    return "Pumpkin Moon";
+                if (Main.snowMoon)
+                    return "Frost Moon";
+            }
             if (player.ZoneUnderworldHeight)
                 return "Underworld";
             bool Underground = player.ZoneDirtLayerHeight;
@@ -739,7 +748,9 @@ namespace NExperience
                     Suffix = "Caverns";
                 else
                     Suffix = "Forest";
-            }            
+            }
+            if (PlayerMod.IsPlayerInInvasionPosition(player))
+                Suffix += " (Contested)";
             return Affix + (Affix != "" ? " " : "") + Suffix;
         }
 

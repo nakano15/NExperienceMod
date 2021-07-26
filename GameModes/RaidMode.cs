@@ -52,6 +52,8 @@ namespace NExperience.GameModes
             mod.CriticalDamageSum += Death * 0.01f;
 
             mod.LuckFactorSum += 0.5f * Av + Level;
+
+            mod.ArmorPenetrationMult += 0.01f * Level;
         }
 
         public override void NpcStatus(NPC npc, GameModeData Data)

@@ -59,6 +59,7 @@ namespace NExperience.GameModes
             mod.MagicCritSum += LUK * PrimaryBonus + INT * SecondaryBonus;
             mod.LuckFactorSum += Luck * 0.5f + Level;
             mod.CriticalDamageSum += 0.01f * (STR + DEX + INT + WIS) * 0.33f;
+            mod.ArmorPenetrationMult += (DEX * PrimaryBonus + LUK * SecondaryBonus + Level * LevelBonus) * TotalBonus;
         }
 
         public override void NpcStatus(NPC npc, GameModeData data)

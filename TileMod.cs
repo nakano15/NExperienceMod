@@ -44,6 +44,25 @@ namespace NExperience
                     int Exp = pm.GetGameModeInfo.Base.GetDigExp(type);
                     if(Exp > 0)
                         pm.GetExp(Exp, ExpReceivedPopText.ExpSource.Digging, false);
+                    switch (type)
+                    {
+                        case Terraria.ID.TileID.Pots:
+                            pm.ClayPotMagicFindPoints++;
+                            CombatText.NewText(new Rectangle(i * 16, j * 16, 8, 8), Color.Green, "Luck Up!", true);
+                            break;
+                        case Terraria.ID.TileID.DemonAltar:
+                            pm.AltarMagicFindPoints++;
+                            CombatText.NewText(new Rectangle(i * 16, j * 16, 8, 8), Color.Green, "Luck Up!", true);
+                            break;
+                        case Terraria.ID.TileID.ShadowOrbs:
+                            pm.OrbMagicFindPoints++;
+                            CombatText.NewText(new Rectangle(i * 16, j * 16, 8, 8), Color.Green, "Luck Up!", true);
+                            break;
+                        case Terraria.ID.TileID.Heart:
+                            pm.LifeCrystalMagicPoints++;
+                            CombatText.NewText(new Rectangle(i * 16, j * 16, 8, 8), Color.Green, "Luck Up!", true);
+                            break;
+                    }
                 }
             }
         }

@@ -35,6 +35,11 @@ namespace NExperience
         public float DodgeRate = 0;
         public float KbMult = 1f, KbSum = 0;
         private int LastLoggedLevel = -1;
+        public uint ClayPotMagicFindPoints = 0,
+            AltarMagicFindPoints = 0,
+            OrbMagicFindPoints = 0,
+            LifeCrystalMagicPoints = 0,
+            LifeFruitMagicPoints = 0;
 
         public bool ZoneGraveyard { get { return biome[0]; } set { biome[0] = value; } }
         public bool ZoneDeep { get { return biome[1]; } set { biome[1] = value; } }
@@ -110,10 +115,30 @@ namespace NExperience
             LastLoggedLevel = GetGameModeInfo.Level;
         }
 
+        public static bool IsPlayerInInvasionPosition(Player player)
+        {
+            if(Main.invasionType > 0 && Main.invasionDelay == 0 && Main.invasionSize > 0&& player.ZoneOverworldHeight)
+            {
+                bool InInvasionPlace = false;
+                const int Distance = 5000;
+                if (Math.Abs(player.position.X - Main.invasionX * 16) < Distance)
+                    return true;
+                if(Main.invasionX >= Main.maxTilesX / 2 - 5 && Main.invasionX <= Main.maxTilesX / 2 + 5)
+                {
+                    for(int i = 0; i < 200; i++)
+                    {
+                        if (Main.npc[i].active && Main.npc[i].townNPC && Math.Abs(player.position.X - Main.npc[i].Center.X) < Distance)
+                            return true;
+                    }
+                }
+            }
+            return false;
+        }
+
         public override void ResetEffects()
         {
             ExpBonus = 0f;
-            Luck = 0;
+            Luck = ClayPotMagicFindPoints * 0.1f + AltarMagicFindPoints * 0.3f + OrbMagicFindPoints * 0.2f + LifeCrystalMagicPoints * 0.25f + LifeFruitMagicPoints * 0.05f;
             CriticalDamageBonusMult = 0f;
             NeutralDamage = 1f;
             DodgeRate = 0;
@@ -518,6 +543,11 @@ namespace NExperience
             int GameModeCount = GameModes.Count;
             tag.Add("GameModeCount", GameModeCount);
             tag.Add("ModVersion", MainMod.ModVersion);
+            tag.Add("ClayPotMagicFind", (int)ClayPotMagicFindPoints);
+            tag.Add("AltarMagicFind", (int)AltarMagicFindPoints);
+            tag.Add("ShadowOrbMagicFind", (int)OrbMagicFindPoints);
+            tag.Add("LifeCrystalMagicFind", (int)LifeCrystalMagicPoints);
+            tag.Add("LifeFruitMagicFind", (int)LifeFruitMagicPoints);
             int Count = 0;
             foreach (string g in GameModes.Keys.ToArray())
             {
@@ -534,6 +564,14 @@ namespace NExperience
             if (!tag.ContainsKey("GameModeCount")) return;
             int GameModeCount = tag.GetInt("GameModeCount");
             int ModVersion = tag.GetInt("ModVersion");
+            if (ModVersion >= 4)
+            {
+                ClayPotMagicFindPoints = (uint)tag.GetInt("ClayPotMagicFind");
+                AltarMagicFindPoints = (uint)tag.GetInt("AltarMagicFind");
+                OrbMagicFindPoints = (uint)tag.GetInt("ShadowOrbMagicFind");
+                LifeCrystalMagicPoints = (uint)tag.GetInt("LifeCrystalMagicFind");
+                LifeFruitMagicPoints = (uint)tag.GetInt("LifeFruitMagicFind");
+            }
             for (int g = 0; g < GameModeCount; g++)
             {
                 string GameModeKey = tag.GetString("GameModeKey_" + g);

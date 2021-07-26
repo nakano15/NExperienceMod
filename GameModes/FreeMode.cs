@@ -64,6 +64,7 @@ namespace NExperience.GameModes
             mod.DefenseMult += StatusBonusPerLevel;
             mod.NeutralDamageMult += StatusBonusPerLevel;
             mod.LuckFactorSum += Level * 0.01f;
+            mod.ArmorPenetrationMult += Level * 0.01f;
 
             mod.MaxHealthSum += 4 * fgt;
             mod.MeleeDamageSum += 3 * fgt;

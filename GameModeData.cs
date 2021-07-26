@@ -324,7 +324,12 @@ namespace NExperience
                     PointsSum = 0;
                     for (byte s = 0; s < Base.Status.Count; s++)
                     {
-                        PointsSum += PointsCount[s] = (int)(PointsCount[s] * PointsReduction);
+                        PointsCount[s] = (int)(Math.Round(PointsCount[s] * PointsReduction));
+                        if(PointsCount[s] + PointsSum > PointsResult)
+                        {
+                            PointsCount[s] = PointsResult - PointsSum;
+                        }
+                        PointsSum += PointsCount[s];
                     }
                     if (PointsSum > 0)
                     {
@@ -338,6 +343,10 @@ namespace NExperience
                             if (CurrentKey >= Keys.Length)
                                 CurrentKey -= (byte)Keys.Length;
                         }
+                    }
+                    if(PointsSum != PointsResult)
+                    {
+                        Main.NewText("Status wasn't calculated correctly: " + (PointsSum - PointsResult) + " status points left.");
                     }
                 }
                 PointsUnderEffect = PointsCount;
