@@ -10,3 +10,5 @@ You can now gain Luck points from:
 	Destroying Demon Altars.
 	Destroying Life Crystals.
 Invasions will show the current biome as contested, if you're in their range.
+You can no longer farm exp from crafting coins.
+The mod will avoid giving you exp from breaking tiles you already placed.

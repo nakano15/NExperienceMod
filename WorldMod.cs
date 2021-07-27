@@ -59,6 +59,7 @@ namespace NExperience
             {
                 WorldGameMode = MainMod.GetGameModeIDs[0];
             }
+            TileMod.PlayerPlacedTiles.Clear();
             MainMod.WarnGameModeChange = true;
             //IsDeathMode = false;
             ResetLevelCalc();

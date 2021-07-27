@@ -11,10 +11,17 @@ namespace NExperience
     public class TileMod : GlobalTile
     {
         private static List<int> RecentlyBrokenTiles = new List<int>();
+        public static List<Point> PlayerPlacedTiles = new List<Point>();
 
         public static void ResetBrokenTilesList()
         {
             RecentlyBrokenTiles.Clear();
+        }
+
+        public override void PlaceInWorld(int i, int j, Item item)
+        {
+            if(item.value > 0)
+                PlayerPlacedTiles.Add(new Point(i, j));
         }
 
         public override void KillTile(int i, int j, int type, ref bool fail, ref bool effectOnly, ref bool noItem)
@@ -23,6 +30,11 @@ namespace NExperience
                 return;
             if (RecentlyBrokenTiles.Contains(type))
                 return;
+            if (PlayerPlacedTiles.Contains(new Point(i, j)))
+            {
+                PlayerPlacedTiles.Remove(new Point(i, j));
+                return;
+            }
             if (type != Terraria.ID.TileID.MushroomTrees &&
                 type != Terraria.ID.TileID.PalmTree &&
                 type != Terraria.ID.TileID.Trees &&

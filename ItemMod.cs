@@ -67,7 +67,7 @@ namespace NExperience
             {
                 ValueStack += (i.value * i.stack) / 2;
             }
-            if (ValueStack > 0)
+            if (ValueStack > 0 && (item.type < Terraria.ID.ItemID.CopperCoin || item.type > Terraria.ID.ItemID.PlatinumCoin))
             {
                 foreach (int p in PlayerMod.GetPlayerTeamMates(Main.player[Main.myPlayer]))
                 {
