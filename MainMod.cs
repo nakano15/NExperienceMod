@@ -851,6 +851,7 @@ namespace NExperience
             AddGameMode(new GameModes.FreeMode());
             AddGameMode(new GameModes.RaidMode());
             AddGameMode(new GameModes.ClassicRPG());
+            AddGameMode(new GameModes.AscensionRPG());
         }
 
         public static void AddGameMode(GameModeBase gmbase)

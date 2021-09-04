@@ -76,6 +76,30 @@ namespace NExperience
             }
         }
 
+        public override void AddRecipes()
+        {
+            //T1
+            GetBarTransmutationResult(Terraria.ID.ItemID.CobaltBar, Terraria.ID.ItemID.PalladiumBar, mod).AddRecipe();
+            GetBarTransmutationResult(Terraria.ID.ItemID.PalladiumBar, Terraria.ID.ItemID.CobaltBar, mod).AddRecipe();
+            //T2
+            GetBarTransmutationResult(Terraria.ID.ItemID.MythrilBar, Terraria.ID.ItemID.OrichalcumBar, mod).AddRecipe();
+            GetBarTransmutationResult(Terraria.ID.ItemID.OrichalcumBar, Terraria.ID.ItemID.MythrilBar, mod).AddRecipe();
+            //T3
+            GetBarTransmutationResult(Terraria.ID.ItemID.AdamantiteBar, Terraria.ID.ItemID.TitaniumBar, mod).AddRecipe();
+            GetBarTransmutationResult(Terraria.ID.ItemID.TitaniumBar, Terraria.ID.ItemID.AdamantiteBar, mod).AddRecipe();
+        }
+
+        private ModRecipe GetBarTransmutationResult(int ResultItem, int RequiredItem, Mod mod)
+        {
+            ModRecipe recipe = new ModRecipe(mod);
+            recipe.SetResult(ResultItem);
+            recipe.requiredItem[0].SetDefaults(RequiredItem);
+            recipe.requiredItem[0].stack = 2;
+            recipe.requiredItem[1].SetDefaults(Terraria.ID.ItemID.PixieDust);
+            recipe.requiredTile[0] = Terraria.ID.TileID.AlchemyTable;
+            return recipe;
+        }
+
         public override void CaughtFishStack(int type, ref int stack)
         {
             foreach (int p in PlayerMod.GetPlayerTeamMates(Main.player[Main.myPlayer]))

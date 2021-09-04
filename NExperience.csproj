@@ -56,6 +56,7 @@
     <Compile Include="GameModeData.cs" />
     <Compile Include="GameModeBase.cs" />
     <Compile Include="GameModeSelector.cs" />
+    <Compile Include="GameModes\AscensionRPG.cs" />
     <Compile Include="GameModes\BasicRPG.cs" />
     <Compile Include="GameModes\ClassicRPG.cs" />
     <Compile Include="GameModes\FreeMode.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="PlayerStatusMod.cs" />
     <Compile Include="ProjMod.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RecipeMod.cs" />
     <Compile Include="TileMod.cs" />
     <Compile Include="WorldMod.cs" />
   </ItemGroup>

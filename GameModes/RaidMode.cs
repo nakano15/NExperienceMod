@@ -16,7 +16,8 @@ namespace NExperience.GameModes
         {
             this.GameModeID = RaidRpgModeID;
             this.Name = "Raid Mode";
-            this.Description = "Not intended to be played alone.";
+            this.Description = "Not intended to be played alone.\n" +
+                "All enemies have status increased for intended gameplay with multiple characters in combat.";
             DefenseToHealthConversionValue = 4;
             MaxLevel = 99;
             this.Status.Add(new StatusInfo() { Name = "Power", Description = "Increases Physical Abilities damage." });
@@ -59,9 +60,9 @@ namespace NExperience.GameModes
         public override void NpcStatus(NPC npc, GameModeData Data)
         {
             if(npc.lifeMax > 5)
-                npc.lifeMax = (int)((npc.lifeMax + 50 + 10 * (Data.Level / 10) + (npc.lifeMax / 100) * 100) * Data.Level2);
-            if(npc.damage > 0) npc.damage += 20 + 5 * (Data.Level / 10) + Data.Level2 * 5;
-            npc.defense += 5 + Data.Level2 / 2;
+                npc.lifeMax = (int)((npc.lifeMax + 50 + 10 * (Data.Level * 0.1f) + (npc.lifeMax * 0.01f) * 100) * Data.Level2);
+            if(npc.damage > 0) npc.damage += 20 + 5 * (int)(Data.Level * 0.1f) + Data.Level2 * 5;
+            npc.defense += 5 + (int)(Data.Level2 * 0.5f);
             npc.knockBackResist *= 0.3f;
             //npc.knockBackResist -= npc.knockBackResist * Data.Level2 * 0.005f;
             Data.Exp = (int)(npc.lifeMax * Data.Level * 0.1f);

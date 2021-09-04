@@ -17,7 +17,9 @@ namespace NExperience.GameModes
             GameModeID = ModeID;
             Name = "Classic RPG";
             WikiPageID = "Classic_RPG_Mode";
-            Description = "An attempt of recreation of the early N Terraria rpg mode.";
+            Description = "An attempt of recreation of the early N Terraria rpg mode.\n" +
+                "Leveling takes time, and monsters have are quite tough.\n" +
+                "Perfect if you like grinding, or want to spend time enjoying your world.";
             MaxLevel = 100;
             GenerateMaxExpTable();
             StatusPointsPerLevel = 10;

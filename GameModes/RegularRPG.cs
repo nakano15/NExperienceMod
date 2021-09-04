@@ -27,19 +27,25 @@ namespace NExperience.GameModes
                     GameModeID = RegularRpgModeID;
                     Name = "Regular RPG";
                     WikiPageID = "Regular_RPG_Mode";
-                    Description = "N Terraria's basic rpg mode.";
+                    Description = "N Terraria's basic rpg mode.\n" +
+                        "Has decent leveling rate, and monsters can worry you a bit.\n" +
+                        "Good if you want a nice leveling experience.";
                     break;
                 case 1:
                     GameModeID = HardcoreRpgModeID;
                     Name = "Hardcore RPG";
                     WikiPageID = "Hardcore_RPG_Mode";
-                    Description = "If you want an extra challenge version of Regular RPG Mode,\nand with a better reward.";
+                    Description = "If you want an extra challenge version of Regular RPG Mode,\nand with a better reward.\n" +
+                        "Monsters are extra tougher, and due to that, award more exp.\n" +
+                        "You will need to pull yourself over the limit starting from near the end game.";
                     break;
                 case 2:
                     GameModeID = SoftcoreRpgModeID;
                     Name = "Softcore RPG";
                     WikiPageID = "Softcore_RPG_Mode";
-                    Description = "If you just want Regular RPG Mode, but just for fun.";
+                    Description = "An way easier version of Regular RPG Mode.\n" +
+                        "Difficulty is greatly reduced.\n" +
+                        "May be way too easy late in the game.";
                     break;
             }
             MaxLevel = 150;

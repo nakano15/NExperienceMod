@@ -18,7 +18,9 @@ namespace NExperience.GameModes
             this.GameModeID = BasicRpgModeID;
             this.Name = "Basic RPG Mode";
             WikiPageID = "Basic_RPG_Mode";
-            this.Description = "Created just for test, in the mod just for fun.";
+            this.Description = "Created just for test, in the mod just for fun.\n" +
+                "Easy leveling without worries. Monsters have decent status.\n" +
+                "Characters visibly gets stronger.";
             DefenseToHealthConversionValue = 2;
             MaxLevel = 125;
             SetRules();

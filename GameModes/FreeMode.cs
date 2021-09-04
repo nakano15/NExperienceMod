@@ -17,7 +17,11 @@ namespace NExperience.GameModes
             GameModeID = "freerpg";
             Name = "Free Mode";
             WikiPageID = "Free_Mode";
-            Description = "Levels? Rules? What are those?";
+            Description = "Levels? Rules? What are those?\n" +
+                "Monsters levels are based on their initial status. They also get tougher \n" +
+                "as you go far from spawn, and based on progress in the world.\n" +
+                "Intended if you want your leveling to \"never end\". Or if you want to \n" +
+                "add some extra difficulty to your gameplay.";
             InitialLevel = 0;
             MaxLevel = int.MaxValue;
             InitialStatusPoints = 0;

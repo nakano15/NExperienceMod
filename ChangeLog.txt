@@ -1,14 +1,11 @@
-﻿Status sum variables were changed from integer type to real type.
-	That will actually generate more benefits for your characters because of that change.
--Classic Mode
-	Neutral Damage now gains bonus based on level.
-	Goblin Army, Pirate Army, Martian Madness, Frost Legion, Pumpkin Moon and Frost Moon events gained their levels.
-Added Armor Penetration modifier.
-You can now gain Luck points from:
-	Destroying Clay Pots.
-	Destroying Shadow Orbs.
-	Destroying Demon Altars.
-	Destroying Life Crystals.
-Invasions will show the current biome as contested, if you're in their range.
-You can no longer farm exp from crafting coins.
-The mod will avoid giving you exp from breaking tiles you already placed.
+﻿You can now transmutate hardmode bars into their variants, like from Cobalt until Titanium, using the Alchemy Table.
+	For the transmutation, you need 2 bars of the tier you want to convert, and a pixie dust, to get a bar of the other tier.
+Crafting item is now affected by luck.
+	Lucky Strike does:
+		If It's a weapon, gives you a guaranted good reforge prefix.
+		If it's not, gives you an extra of that item.
+	Very Lucky Strike does:
+		If It's a weapon, gives you the best possible reforge prefix for that weapon.
+		If it's not, gives you 7 more of that item.
+Added AScension RPG Game Mode.
+Expanded the description of the game modes.
