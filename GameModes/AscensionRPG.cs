@@ -102,7 +102,7 @@ namespace NExperience.GameModes
             mod.MaxHealthMult = 0.7f + Level * 0.01f + Level * Level * 0.005f;
             mod.MaxHealthSum = Health * 0.25f;
             //Mana
-            mod.MaxManaMult = 0.1f + Level * 0.0095f;
+            mod.MaxManaMult = 0.5f + Level * 0.0095f;
             mod.ManaCostMult = mod.MaxManaMult;
             mod.MaxManaSum = Mana * 0.25f;
             //Offensive
@@ -113,7 +113,7 @@ namespace NExperience.GameModes
             mod.MeleeDamageSum = mod.RangedDamageSum = mod.MagicDamageSum =
                 mod.MinionDamageSum = DamageMult;
             //Defensive
-            mod.DefenseMult = Level * 0.01f;
+            mod.DefenseMult = 1f + Level * 0.01f;
             mod.DefenseSum = Defensive * 0.25f;
             //Potence
             mod.MeleeCritMult = mod.RangedCritMult = mod.MagicCritMult = 0.5f + Level * 0.005f;
@@ -136,8 +136,10 @@ namespace NExperience.GameModes
         {
             int Level = Data.Level2, 
                 ComplexityLevel = (int)((Level - 1) * 0.34f);
-            if(npc.lifeMax > 5)npc.lifeMax = (int)(npc.lifeMax * (1f + Data.Level * 0.01f + ComplexityLevel * 0.1f));
+            if(npc.lifeMax > 5)npc.lifeMax = (int)(npc.lifeMax * (1f + Data.Level * 0.02f + ComplexityLevel * 0.1f));
             npc.damage = (int)(npc.damage * (1f + Data.Level * 0.01f + ComplexityLevel * 0.05f));
+            if (npc.damage > 0)
+                npc.damage += 4 * Level;
             npc.defense = (int)(npc.defense * (0.5f + Data.Level * 0.01f + ComplexityLevel * 0.05f));
             Data.Exp = (int)(npc.lifeMax * 1.2);
         }
@@ -502,7 +504,7 @@ namespace NExperience.GameModes
                 case TileID.Slush:
                     return 6;
                 case TileID.DesertFossil:
-                    return 0;
+                    return 10;
                 case TileID.Cobalt:
                 case TileID.Palladium:
                     return 230;
@@ -514,6 +516,12 @@ namespace NExperience.GameModes
                     return 890;
                 case TileID.Chlorophyte:
                     return 1192;
+                case TileID.Heart:
+                    return 200;
+                case TileID.ShadowOrbs:
+                    return 1000;
+                case TileID.Cobweb:
+                    return 4;
             }
             return base.GetDigExp(ID);
         }
