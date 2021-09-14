@@ -46,35 +46,46 @@ namespace NExperience
                 RecentlyBrokenTiles.Add(type);
             }
             Vector2 Position = new Vector2(i * 16 + 8, j * 16 + 8);
-            const float ExpShareDistance = 600f;
-            foreach(int p in PlayerMod.GetPlayerTeamMates(Main.player[Main.myPlayer]))
+            Player NearestToTile = Main.player[Main.myPlayer];
             {
-                if(Main.player[p].active && !Main.player[p].dead && Math.Abs(Main.player[p].Center.X - Position.X) < ExpShareDistance &&
-                    Math.Abs(Main.player[p].Center.Y - Position.Y) < ExpShareDistance)
+                float NearestDistance = float.MaxValue;
+                for(int p = 0; p < 255; p++)
                 {
-                    PlayerMod pm = Main.player[p].GetModPlayer<PlayerMod>();
-                    int Exp = pm.GetGameModeInfo.Base.GetDigExp(type);
-                    if(Exp > 0)
-                        pm.GetExp(Exp, ExpReceivedPopText.ExpSource.Digging, false);
-                    switch (type)
+                    if(Main.player[p].active && !Main.player[p].dead)
                     {
-                        case Terraria.ID.TileID.Pots:
-                            pm.ClayPotMagicFindPoints++;
-                            CombatText.NewText(new Rectangle(i * 16, j * 16, 8, 8), Color.Green, "Luck Up!", true);
-                            break;
-                        case Terraria.ID.TileID.DemonAltar:
-                            pm.AltarMagicFindPoints++;
-                            CombatText.NewText(new Rectangle(i * 16, j * 16, 8, 8), Color.Green, "Luck Up!", true);
-                            break;
-                        case Terraria.ID.TileID.ShadowOrbs:
-                            pm.OrbMagicFindPoints++;
-                            CombatText.NewText(new Rectangle(i * 16, j * 16, 8, 8), Color.Green, "Luck Up!", true);
-                            break;
-                        case Terraria.ID.TileID.Heart:
-                            pm.LifeCrystalMagicPoints++;
-                            CombatText.NewText(new Rectangle(i * 16, j * 16, 8, 8), Color.Green, "Luck Up!", true);
-                            break;
+                        float Distance = Main.player[p].Distance(Position);
+                        if(Distance < NearestDistance)
+                        {
+                            NearestDistance = Distance;
+                            NearestToTile = Main.player[p];
+                        }
                     }
+                }
+            }
+            foreach (int p in PlayerMod.GetPlayerTeamMates(NearestToTile))
+            {
+                PlayerMod pm = Main.player[p].GetModPlayer<PlayerMod>();
+                int Exp = pm.GetGameModeInfo.Base.GetDigExp(type);
+                if (Exp > 0)
+                    pm.GetExp(Exp, ExpReceivedPopText.ExpSource.Digging, false);
+                switch (type)
+                {
+                    case Terraria.ID.TileID.Pots:
+                        pm.ClayPotMagicFindPoints++;
+                        CombatText.NewText(new Rectangle(i * 16, j * 16, 8, 8), Color.Green, "Luck Up!", true);
+                        break;
+                    case Terraria.ID.TileID.DemonAltar:
+                        pm.AltarMagicFindPoints++;
+                        CombatText.NewText(new Rectangle(i * 16, j * 16, 8, 8), Color.Green, "Luck Up!", true);
+                        break;
+                    case Terraria.ID.TileID.ShadowOrbs:
+                        pm.OrbMagicFindPoints++;
+                        CombatText.NewText(new Rectangle(i * 16, j * 16, 8, 8), Color.Green, "Luck Up!", true);
+                        break;
+                    case Terraria.ID.TileID.Heart:
+                        pm.LifeCrystalMagicPoints++;
+                        CombatText.NewText(new Rectangle(i * 16, j * 16, 8, 8), Color.Green, "Luck Up!", true);
+                        break;
                 }
             }
         }

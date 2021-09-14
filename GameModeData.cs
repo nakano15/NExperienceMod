@@ -250,7 +250,10 @@ namespace NExperience
                         player.statMana = player.statManaMax2;
                     }
                     if (Main.netMode == 1)
+                    {
                         NetPlayMod.SendPlayerLevel(player.whoAmI, -1, player.whoAmI);
+                        NetPlayMod.SendMessageToServer("> " + player.name + " has reached Level " + Level + "!", new Color(0, 125, 0, 255));
+                    }
                 }
             }
             Base.BiomeLevelRules(player, this, out player.GetModPlayer<PlayerMod>().BiomeMinLv, out player.GetModPlayer<PlayerMod>().BiomeMaxLv);
@@ -448,7 +451,7 @@ namespace NExperience
                 OriginalKB = npc.knockBackResist;
             }
             GameModeID = MainMod.FixedGameMode;
-            if (GameModeChange)
+            if (GameModeChange && Main.netMode != 1)
             {
                 NPC n = npc;
                 if (n.realLife != -1)
@@ -460,7 +463,7 @@ namespace NExperience
                     SpawnLevel = Main.rand.Next(MinLevel, MaxLevel + 1);
                 }
                 Level = SpawnLevel;
-                if(Main.netMode > 0) NetPlayMod.SyncNPCLevels(npc.whoAmI, -1, Main.myPlayer);
+                //if(Main.netMode > 0) NetPlayMod.SyncNPCLevels(npc.whoAmI, -1, Main.myPlayer);
                 IsHardmodeMonster = NpcMod.IsPreHardmodeMonster(npc);
                 HealthChangePercentage = (float)OriginalHealth / npc.lifeMax;
             }

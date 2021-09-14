@@ -58,7 +58,7 @@ namespace NExperience
         /// <param name="Difficulty">How difficult is that task for the grade. This determines how many percents of exp bar will be given.</param>
         /// <param name="PlayerLevel">The level of the player who the reward will be given to.</param>
         /// <returns></returns>
-        public virtual int GetExpReward(float Level, float Difficulty, GameModeData gmd)
+        public virtual int GetExpReward(float Level, float Difficulty, ExpReceivedPopText.ExpSource source, GameModeData gmd)
         {
             if (Level > MaxLevel)
                 Level = MaxLevel;

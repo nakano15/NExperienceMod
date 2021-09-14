@@ -56,7 +56,7 @@ namespace NExperience.GameModes
             FormulaCreator();
         }
 
-        public override int GetExpReward(float RewardLevel, float Difficulty, GameModeData gmd)
+        public override int GetExpReward(float RewardLevel, float Difficulty, ExpReceivedPopText.ExpSource source, GameModeData gmd)
         {
             float Level = RewardLevel / 100 * MaxLevel;
             if (Level == 0)
@@ -1078,7 +1078,7 @@ namespace NExperience.GameModes
                 case TileID.ExposedGems:
                     return 1200;
                 case TileID.DyePlants:
-                    return 2000;
+                    return 500;
                 case TileID.Larva:
                     return 10000;
                 case TileID.PlanteraBulb:

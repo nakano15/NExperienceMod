@@ -119,10 +119,10 @@ namespace NExperience
         {
             const int InventoryLayer = 27;
             LegacyGameInterfaceLayer lmi = new LegacyGameInterfaceLayer("NExperience: Gameplay Hud", DrawGameplayHudInterface, InterfaceScaleType.UI),
-                delc = new LegacyGameInterfaceLayer("NExperience: Entity Level Interface", DrawEntityLevelCheck, InterfaceScaleType.UI),
+                delc = new LegacyGameInterfaceLayer("NExperience: Entity Level Interface", DrawEntityLevelCheck, InterfaceScaleType.Game),
                 dgms = new LegacyGameInterfaceLayer("NExperience: Game Mode Selector", CallGameModeSelector, InterfaceScaleType.UI),
                 lii = new LegacyGameInterfaceLayer("NExperience: Level Interface Info", DrawLevelInfoInterface, InterfaceScaleType.UI),
-                cl = new LegacyGameInterfaceLayer("NExperience: Lucky Clovers Layer", DrawClovers, InterfaceScaleType.UI),
+                cl = new LegacyGameInterfaceLayer("NExperience: Lucky Clovers Layer", DrawClovers, InterfaceScaleType.Game),
                 api = new LegacyGameInterfaceLayer("NExperience: Afk Penalty Interface", DrawAfkPenaltyInterface, InterfaceScaleType.UI),
                 deri = new LegacyGameInterfaceLayer("NExperience: Exp Received Info", DrawExpReceivedInterface, InterfaceScaleType.UI);
             layers.Insert(0, cl);
@@ -423,8 +423,8 @@ namespace NExperience
                         NpcMod npcMod = Main.npc[n].GetGlobalNPC<NpcMod>();
                         if (npcMod != null && npcMod.NpcStatus != null)
                         {
-                            //Vector2 TextPosition = npc.Center - Main.screenPosition;
-                            //TextPosition.Y -= npc.height * 0.5f + 22f;
+                            TextPosition = npc.Center - Main.screenPosition;
+                            TextPosition.Y -= npc.height * 0.5f + 22f;
                             string Text = npcMod.NpcStatus.GetLevelText();
                             Utils.DrawBorderString(Main.spriteBatch, Text, TextPosition, Color.White, 1f, 0.5f, 0.5f);
                             //return true;
@@ -439,8 +439,8 @@ namespace NExperience
                         PlayerMod playerMod = Main.player[p].GetModPlayer<PlayerMod>();
                         if (playerMod != null)
                         {
-                            //Vector2 TextPosition = player.Center - Main.screenPosition;
-                            //TextPosition.Y -= player.height * 0.5f + 22f;
+                            TextPosition = player.Center - Main.screenPosition;
+                            TextPosition.Y -= player.height * 0.5f + 22f;
                             string Text = playerMod.GetGameModeInfo.GetLevelText();
                             Utils.DrawBorderString(Main.spriteBatch, Text, TextPosition, Color.White, 1f, 0.5f, 0.5f);
                             //return true;
@@ -791,7 +791,21 @@ namespace NExperience
 
         public override bool HijackSendData(int whoAmI, int msgType, int remoteClient, int ignoreClient, NetworkText text, int number, float number2, float number3, float number4, int number5, int number6, int number7)
         {
-            if (msgType == 23)
+            BinaryWriter writer = NetMessage.buffer[whoAmI].writer;
+            switch(msgType)
+            {
+                case 16:
+                    {
+                        NetPlayMod.SendPlayerHealth((byte)number);
+                    }
+                    return true;
+                case 23:
+                    {
+                        NetPlayMod.SendNpcInfos((byte)number);
+                    }
+                    return true;
+            }
+            /*if (msgType == 23)
             {
                 int NpcID = Main.npc[number].netID;
                 if (Main.npcLifeBytes.ContainsKey(NpcID))
@@ -810,13 +824,20 @@ namespace NExperience
                     else
                         Console.WriteLine(Mes);
                 }
-            }
+            }*/
             return false;
         }
 
         public override bool HijackGetData(ref byte messageType, ref BinaryReader reader, int playerNumber)
         {
-            if (messageType == 23)
+            switch (messageType)
+            {
+                case 16:
+                    return true;
+                case 23:
+                    return true;
+            }
+            /*if (messageType == 23)
             {
                 long PositionBackup = reader.BaseStream.Position;
                 reader.BaseStream.Position += 2 + 4 * 2 + 4 * 2 + 2 + 1 + 4 * 4;
@@ -838,7 +859,7 @@ namespace NExperience
                     else
                         Console.WriteLine(Mes);
                 }
-            }
+            }*/
             return false;
         }
 

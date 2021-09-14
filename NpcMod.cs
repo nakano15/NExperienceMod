@@ -560,21 +560,29 @@ namespace NExperience
             List<byte> PlayersToGiveExp = new List<byte>();
             for (byte p = 0; p < 255; p++)
             {
-                if (Main.player[p].active && !PlayersToGiveExp.Contains(p) && npc.playerInteraction[p])
+                if (Main.player[p].active && npc.playerInteraction[p])
                 {
-                    PlayersToGiveExp.Add(p);
-                    if (Main.player[p].team > 0 && p < 255)
+                    //if(!PlayersToGiveExp.Contains(p))
+                    //    PlayersToGiveExp.Add(p);
+                    foreach(byte p2 in PlayerMod.GetPlayerTeamMates(Main.player[p], 1200 + 40, 1200 + 56))
                     {
-                        for (byte p2 = (byte)(p + 1); p2 < 255; p2++)
+                        if(!PlayersToGiveExp.Contains(p2))
                         {
-                            if (Main.player[p2].active && Main.player[p2].team == Main.player[p].team &&
-                                Math.Abs(Main.player[p2].Center.X - Main.player[p].Center.X) < 1200 + 40 &&
-                                Math.Abs(Main.player[p2].Center.Y - Main.player[p].Center.Y) < 1200 + 56)
-                            {
-                                PlayersToGiveExp.Add(p2);
-                            }
+                            PlayersToGiveExp.Add(p2);
                         }
                     }
+                    /*for (byte p2 = 0; p2 < 255; p2++)
+                    {
+                        if (p2 != p && !PlayersToGiveExp.Contains(p2) &&
+                            Main.player[p2].active && !Main.player[p2].dead && (
+                            (Main.player[p2].team == 0 && Main.player[p].team == 0 && !Main.player[p].hostile && !Main.player[p2].hostile) ||
+                            Main.player[p2].team == Main.player[p].team) &&
+                            Math.Abs(Main.player[p2].Center.X - Main.player[p].Center.X) < 1200 + 40 &&
+                            Math.Abs(Main.player[p2].Center.Y - Main.player[p].Center.Y) < 1200 + 56)
+                        {
+                            PlayersToGiveExp.Add(p2);
+                        }
+                    }*/
                 }
             }
             return PlayersToGiveExp.ToArray();
@@ -634,7 +642,7 @@ namespace NExperience
                     foreach (byte pos in PlayersToGiveExp)
                     {
                         PlayerMod p = Main.player[pos].GetModPlayer<PlayerMod>();
-                        Console.WriteLine("Sending exp to " + Main.player[pos].name);
+                        //Console.WriteLine("Sending exp to " + Main.player[pos].name);
                         int MyExp = ExpReward;
                         float ExpMult = MainMod.ExpRate + p.ExpBonus;
                         if (MainMod.ExpPenaltyByLevelDifference > 0)

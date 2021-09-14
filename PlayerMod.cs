@@ -20,13 +20,7 @@ namespace NExperience
         {
             get
             {
-                if (!GameModes.ContainsKey(MainMod.FixedGameMode))
-                {
-                    GameModeData gamemode = new GameModeData();
-                    gamemode.GameModeID = MainMod.FixedGameMode;
-                    GameModes.Add(MainMod.FixedGameMode, gamemode);
-                }
-                return GameModes[MainMod.FixedGameMode];
+                return GetGameModeData(MainMod.FixedGameMode);
             }
         }
         public float ExpBonus = 0;
@@ -44,6 +38,17 @@ namespace NExperience
         public bool ZoneGraveyard { get { return biome[0]; } set { biome[0] = value; } }
         public bool ZoneDeep { get { return biome[1]; } set { biome[1] = value; } }
 
+        public GameModeData GetGameModeData(string GameModeID)
+        {
+            if (!GameModes.ContainsKey(GameModeID))
+            {
+                GameModeData gamemode = new GameModeData();
+                gamemode.GameModeID = GameModeID;
+                GameModes.Add(GameModeID, gamemode);
+            }
+            return GameModes[GameModeID];
+        }
+
         public override bool CloneNewInstances
         {
             get
@@ -54,7 +59,7 @@ namespace NExperience
         
         public PlayerMod()
         {
-
+            GameModes = new Dictionary<string, GameModeData>();
         }
 
         public bool HasGameModeData(string ID)
@@ -68,17 +73,6 @@ namespace NExperience
             if (EffectiveLevel)
                 return p.GetGameModeInfo.Level2;
             return p.GetGameModeInfo.Level;
-        }
-
-        public GameModeData GetGameModeData(string ID)
-        {
-            if (!GameModes.ContainsKey(ID))
-            {
-                GameModeData gamemode = new GameModeData();
-                gamemode.GameModeID = MainMod.FixedGameMode;
-                GameModes.Add(ID, gamemode);
-            }
-            return GameModes[ID];
         }
 
         public override void OnEnterWorld(Player player)
@@ -236,47 +230,47 @@ namespace NExperience
         public void GetExp(int Value, ExpReceivedPopText.ExpSource Source, bool ShowTooltip = false, Rectangle? expshowpos = null)
         {
             float ExpMult = (Value >= 0 ? MainMod.ExpRate + ExpBonus : 1f);
-            if(player.whoAmI == Main.myPlayer)
+            if (player.whoAmI == Main.myPlayer)
             {
-                float Penalty = MainMod.AfkPenaltyDecimal;
-                if(Penalty > 0)
-                    ExpMult -= ExpMult * Penalty;
-            }
-            if (ShowTooltip)
-            {
-                string ExpBonus = "";
-                if (expshowpos == null)
-                    expshowpos = player.getRect();
-                bool Penalty = Value < 0;
-                if (ExpMult != 1)
+                float PenaltyPercent = MainMod.AfkPenaltyDecimal;
+                if (PenaltyPercent > 0)
+                    ExpMult -= ExpMult * PenaltyPercent;
+                if (ShowTooltip)
                 {
-                    if (ExpMult > 1)
-                        ExpBonus = " (" + ((int)((ExpMult - 1f) * 100)) + "% Bonus)";
+                    string ExpBonus = "";
+                    if (expshowpos == null)
+                        expshowpos = player.getRect();
+                    bool Penalty = Value < 0;
+                    if (ExpMult != 1)
+                    {
+                        if (ExpMult > 1)
+                            ExpBonus = " (" + ((int)((ExpMult - 1f) * 100)) + "% Bonus)";
+                        else
+                        {
+                            ExpBonus = " (" + ((int)((ExpMult - 1f) * 100)) + "% Penalty)";
+                            Penalty = !Penalty;
+                        }
+                    }
+                    if (MainMod.ShowExpAsPercentage)
+                    {
+                        float ExpValue = (float)Math.Round((float)Value / GetGameModeInfo.MaxExp * 100, 2);
+                        if (ExpValue == 0)
+                        {
+                            CombatText.NewText(expshowpos.Value, (Penalty ? Color.Red : Color.Cyan), "< 0.01% Exp" + ExpBonus, true);
+                        }
+                        else
+                        {
+                            CombatText.NewText(expshowpos.Value, (Penalty ? Color.Red : Color.Cyan), ExpValue + "% Exp" + ExpBonus, true);
+                        }
+                    }
                     else
                     {
-                        ExpBonus = " (" + ((int)((ExpMult - 1f) * 100)) + "% Penalty)";
-                        Penalty = !Penalty;
+                        CombatText.NewText(expshowpos.Value, (Penalty ? Color.Red : Color.Cyan), Value + " Exp" + ExpBonus, true);
                     }
-                }
-                if (MainMod.ShowExpAsPercentage)
-                {
-                    float ExpValue = (float)Math.Round((float)Value / GetGameModeInfo.MaxExp * 100, 2);
-                    if (ExpValue == 0)
-                    {
-                        CombatText.NewText(expshowpos.Value, (Penalty ? Color.Red : Color.Cyan), "< 0.01% Exp" + ExpBonus, true);
-                    }
-                    else
-                    {
-                        CombatText.NewText(expshowpos.Value, (Penalty ? Color.Red : Color.Cyan), ExpValue + "% Exp" + ExpBonus, true);
-                    }
-                }
-                else
-                {
-                    CombatText.NewText(expshowpos.Value, (Penalty ? Color.Red : Color.Cyan), Value + " Exp" + ExpBonus, true);
                 }
             }
-            if (player.whoAmI != Main.myPlayer && Main.netMode >= 1)
-                NetPlayMod.SendExpToPlayer(player.whoAmI, Value, Source, Main.myPlayer);
+            if ((Main.netMode == 2 || player.whoAmI != Main.myPlayer) && Main.netMode >= 1)
+                NetPlayMod.SendExpToPlayer(player.whoAmI, Value, Source, (Main.netMode == 2 ? -1 : Main.myPlayer));
             else
             {
                 try
@@ -308,7 +302,7 @@ namespace NExperience
         public int GetExpReward(float Level, float Percentage, ExpReceivedPopText.ExpSource source, bool ShowTooltip = true)
         {
             GameModeData gmd = GetGameModeInfo;
-            int ExpReward = gmd.Base.GetExpReward(Level, Percentage, gmd);
+            int ExpReward = gmd.Base.GetExpReward(Level, Percentage, source, gmd);
             if (ExpReward < 1)
                 ExpReward = 1;
             GetExp(ExpReward, source, ShowTooltip);
@@ -318,12 +312,15 @@ namespace NExperience
         public static int[] GetPlayerTeamMates(Player player, float DistanceX = 800, float DistanceY = 600)
         {
             List<int> Players = new List<int>();
-            Players.Add(player.whoAmI);
-            if (player.whoAmI < 255 && player.team > 0)
+            if(!player.dead)
+                Players.Add(player.whoAmI);
+            if (player.whoAmI < 255)
             {
                 for (int i = 0; i < 255; i++)
                 {
-                    if (i != player.whoAmI && Main.player[i].active && player.team == Main.player[i].team && 
+                    if (i != player.whoAmI && Main.player[i].active && !Main.player[i].dead && 
+                        ((player.team == 0 && Main.player[i].team == 0 && !player.hostile && !Main.player[i].hostile) ||
+                        player.team == Main.player[i].team) && 
                         Math.Abs(Main.player[i].Center.X - player.Center.X) < DistanceX && Math.Abs(Main.player[i].Center.Y - player.Center.Y) < DistanceY)
                     {
                         Players.Add(i);

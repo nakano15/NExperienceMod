@@ -9,3 +9,5 @@ Crafting item is now affected by luck.
 		If it's not, gives you 7 more of that item.
 Added AScension RPG Game Mode.
 Expanded the description of the game modes.
+Regular RPG Mode
+	Nerfed exp given by Dye plants.

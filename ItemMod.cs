@@ -56,7 +56,7 @@ namespace NExperience
         {
             foreach (int p in PlayerMod.GetPlayerTeamMates(Main.player[Main.myPlayer]))
             {
-                Main.player[p].GetModPlayer<PlayerMod>().GetExpReward(5, 0.005f * resultStack, ExpReceivedPopText.ExpSource.Extractinator);
+                Main.player[p].GetModPlayer<PlayerMod>().GetExpReward(5, 0.005f * resultStack, ExpReceivedPopText.ExpSource.Extractinator, p == Main.myPlayer);
             }
         }
 
@@ -71,7 +71,7 @@ namespace NExperience
             {
                 foreach (int p in PlayerMod.GetPlayerTeamMates(Main.player[Main.myPlayer]))
                 {
-                    Main.player[p].GetModPlayer<PlayerMod>().GetExpReward(5, 0.05f * (ValueStack / 1000000), ExpReceivedPopText.ExpSource.Crafting);
+                    Main.player[p].GetModPlayer<PlayerMod>().GetExpReward(5, 0.05f * (ValueStack / 1000000), ExpReceivedPopText.ExpSource.Crafting, p == Main.myPlayer);
                 }
             }
         }

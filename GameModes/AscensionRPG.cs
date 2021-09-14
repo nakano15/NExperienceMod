@@ -525,5 +525,12 @@ namespace NExperience.GameModes
             }
             return base.GetDigExp(ID);
         }
+
+        public override int GetExpReward(float Level, float Difficulty, ExpReceivedPopText.ExpSource source, GameModeData gmd)
+        {
+            if(source == ExpReceivedPopText.ExpSource.Extractinator)
+                return (int)(Math.Max(1, base.GetExpReward(Level, Difficulty, source, gmd) * 0.2f));
+            return base.GetExpReward(Level, Difficulty, source, gmd);
+        }
     }
 }
