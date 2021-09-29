@@ -47,6 +47,7 @@ namespace NExperience
             }
             Vector2 Position = new Vector2(i * 16 + 8, j * 16 + 8);
             Player NearestToTile = Main.player[Main.myPlayer];
+            if(Main.netMode > 0)
             {
                 float NearestDistance = float.MaxValue;
                 for(int p = 0; p < 255; p++)
@@ -65,6 +66,8 @@ namespace NExperience
             foreach (int p in PlayerMod.GetPlayerTeamMates(NearestToTile))
             {
                 PlayerMod pm = Main.player[p].GetModPlayer<PlayerMod>();
+				if(pm == null)
+					continue;
                 int Exp = pm.GetGameModeInfo.Base.GetDigExp(type);
                 if (Exp > 0)
                     pm.GetExp(Exp, ExpReceivedPopText.ExpSource.Digging, false);
@@ -72,19 +75,19 @@ namespace NExperience
                 {
                     case Terraria.ID.TileID.Pots:
                         pm.ClayPotMagicFindPoints++;
-                        CombatText.NewText(new Rectangle(i * 16, j * 16, 8, 8), Color.Green, "Luck Up!", true);
+                        //CombatText.NewText(new Rectangle(i * 16, j * 16, 8, 8), Color.Green, "Luck Up!", true);
                         break;
                     case Terraria.ID.TileID.DemonAltar:
                         pm.AltarMagicFindPoints++;
-                        CombatText.NewText(new Rectangle(i * 16, j * 16, 8, 8), Color.Green, "Luck Up!", true);
+                        //CombatText.NewText(new Rectangle(i * 16, j * 16, 8, 8), Color.Green, "Luck Up!", true);
                         break;
                     case Terraria.ID.TileID.ShadowOrbs:
                         pm.OrbMagicFindPoints++;
-                        CombatText.NewText(new Rectangle(i * 16, j * 16, 8, 8), Color.Green, "Luck Up!", true);
+                        //CombatText.NewText(new Rectangle(i * 16, j * 16, 8, 8), Color.Green, "Luck Up!", true);
                         break;
                     case Terraria.ID.TileID.Heart:
                         pm.LifeCrystalMagicPoints++;
-                        CombatText.NewText(new Rectangle(i * 16, j * 16, 8, 8), Color.Green, "Luck Up!", true);
+                        //CombatText.NewText(new Rectangle(i * 16, j * 16, 8, 8), Color.Green, "Luck Up!", true);
                         break;
                 }
             }

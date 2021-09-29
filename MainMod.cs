@@ -158,6 +158,8 @@ namespace NExperience
 
         public static void UpdateExpReceivedPopText(ExpReceivedPopText.ExpSource Source, int NewExp, PlayerMod player)
         {
+            if (Main.netMode == 2)
+                return;
             for(int e = 0; e < ExpReceived.Count; e++)
             {
                 if(ExpReceived[e].Source == Source)
@@ -420,7 +422,7 @@ namespace NExperience
                     NPC npc = Main.npc[n];
                     if (npc.active && Main.mouseX >= npc.position.X - Main.screenPosition.X && Main.mouseX < npc.position.X - Main.screenPosition.X + npc.width && Main.mouseY >= npc.position.Y - Main.screenPosition.Y && Main.mouseY < npc.position.Y - Main.screenPosition.Y + npc.height)
                     {
-                        NpcMod npcMod = Main.npc[n].GetGlobalNPC<NpcMod>();
+                        NpcMod npcMod = npc.GetGlobalNPC<NpcMod>();
                         if (npcMod != null && npcMod.NpcStatus != null)
                         {
                             TextPosition = npc.Center - Main.screenPosition;

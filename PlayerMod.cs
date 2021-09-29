@@ -269,22 +269,25 @@ namespace NExperience
                     }
                 }
             }
-            if ((Main.netMode == 2 || player.whoAmI != Main.myPlayer) && Main.netMode >= 1)
-                NetPlayMod.SendExpToPlayer(player.whoAmI, Value, Source, (Main.netMode == 2 ? -1 : Main.myPlayer));
-            else
+            if (Main.netMode < 2)
             {
-                try
+                if (player.whoAmI != Main.myPlayer && Main.netMode == 1)
+                    NetPlayMod.SendExpToPlayer(player.whoAmI, Value, Source, (Main.netMode == 2 ? -1 : Main.myPlayer));
+                else
                 {
-                    int Exp = checked((int)(Value * ExpMult));
-                    if(player.whoAmI == Main.myPlayer && Main.netMode < 2)
+                    try
                     {
-                        MainMod.UpdateExpReceivedPopText(Source, Exp, this);
+                        int Exp = checked((int)(Value * ExpMult));
+                        if (player.whoAmI == Main.myPlayer && Main.netMode < 2)
+                        {
+                            MainMod.UpdateExpReceivedPopText(Source, Exp, this);
+                        }
+                        GetGameModeInfo.ChangeExp(Exp, player);
                     }
-                    GetGameModeInfo.ChangeExp(Exp, player);
-                }
-                catch
-                {
-                    GetGameModeInfo.ChangeExp((Value > 0 ? int.MaxValue : int.MinValue), player);
+                    catch
+                    {
+                        GetGameModeInfo.ChangeExp((Value > 0 ? int.MaxValue : int.MinValue), player);
+                    }
                 }
             }
         }
@@ -312,15 +315,15 @@ namespace NExperience
         public static int[] GetPlayerTeamMates(Player player, float DistanceX = 800, float DistanceY = 600)
         {
             List<int> Players = new List<int>();
-            if(!player.dead)
-                Players.Add(player.whoAmI);
             if (player.whoAmI < 255)
             {
+                if (!player.dead)
+                    Players.Add(player.whoAmI);
                 for (int i = 0; i < 255; i++)
                 {
-                    if (i != player.whoAmI && Main.player[i].active && !Main.player[i].dead && 
+                    if (i != player.whoAmI && Main.player[i].active && !Main.player[i].dead &&
                         ((player.team == 0 && Main.player[i].team == 0 && !player.hostile && !Main.player[i].hostile) ||
-                        player.team == Main.player[i].team) && 
+                        player.team == Main.player[i].team) &&
                         Math.Abs(Main.player[i].Center.X - player.Center.X) < DistanceX && Math.Abs(Main.player[i].Center.Y - player.Center.Y) < DistanceY)
                     {
                         Players.Add(i);

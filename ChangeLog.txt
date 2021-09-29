@@ -7,7 +7,8 @@ Crafting item is now affected by luck.
 	Very Lucky Strike does:
 		If It's a weapon, gives you the best possible reforge prefix for that weapon.
 		If it's not, gives you 7 more of that item.
-Added AScension RPG Game Mode.
+Added Ascension RPG Game Mode.
 Expanded the description of the game modes.
 Regular RPG Mode
 	Nerfed exp given by Dye plants.
+Removed the Luck Up! text from breaking tiles.
