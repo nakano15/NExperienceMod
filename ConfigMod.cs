@@ -63,6 +63,10 @@ namespace NExperience
         [Tooltip("If your character level is higher than the biome maximum level, or toughest npc nearby, the level will be scaled down.")]
         public bool AddBiomeLevelCapper { get { return MainMod.LevelCapping; } set { MainMod.LevelCapping = value; } }
 
+        [Label("Set Everything To My Level")]
+        [Tooltip("Makes all npcs in the world have the level scaled to your character.\nIf Biome Level capper is on, will be downscaled based on biome.\nOn multiplayer, It will instead take the level of the closest player.")]
+        public bool SetEverythingToMyLevel { get { return MainMod.EverythingHasMyLevel; } set { MainMod.EverythingHasMyLevel = value; } }
+
         [Label("Status Capper")]
         [Tooltip("Works with the Biome Level Capper. Adds a cap to item damage and defense depending on the level.")]
         public bool AddStatusLevelCapper { get { return MainMod.ItemStatusCapper; } set { MainMod.ItemStatusCapper = value; } }

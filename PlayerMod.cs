@@ -230,7 +230,7 @@ namespace NExperience
         public void GetExp(int Value, ExpReceivedPopText.ExpSource Source, bool ShowTooltip = false, Rectangle? expshowpos = null)
         {
             float ExpMult = (Value >= 0 ? MainMod.ExpRate + ExpBonus : 1f);
-            if (player.whoAmI == Main.myPlayer)
+            if (Main.netMode < 2 && player.whoAmI == Main.myPlayer)
             {
                 float PenaltyPercent = MainMod.AfkPenaltyDecimal;
                 if (PenaltyPercent > 0)
@@ -269,10 +269,10 @@ namespace NExperience
                     }
                 }
             }
-            if (Main.netMode < 2)
+            //if (Main.netMode < 2)
             {
-                if (player.whoAmI != Main.myPlayer && Main.netMode == 1)
-                    NetPlayMod.SendExpToPlayer(player.whoAmI, Value, Source, (Main.netMode == 2 ? -1 : Main.myPlayer));
+                if (player.whoAmI != Main.myPlayer || Main.netMode == 2)
+                    NetPlayMod.SendExpToPlayer(player.whoAmI, Value, Source, Main.myPlayer);
                 else
                 {
                     try

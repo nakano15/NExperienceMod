@@ -12,3 +12,9 @@ Expanded the description of the game modes.
 Regular RPG Mode
 	Nerfed exp given by Dye plants.
 Removed the Luck Up! text from breaking tiles.
+Fixed a number of multiplayer issues.
+	Multiplayer still has bugs, but should be more tolerable now.
+Added game mode option of setting all enemies to your level.
+	On multiplayer, the level set on the monster will be based on the closest player.
+	With Biome Level Capper turned on, the monsters level will be based on the capped level of the player.
+Nerfed extractinator exp reward.

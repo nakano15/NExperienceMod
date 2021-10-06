@@ -279,8 +279,9 @@ namespace NExperience
                         {
                             if (Math.Abs(Main.npc[n].Center.X - player.Center.X) < NPC.sWidth * 2 && Math.Abs(Main.npc[n].Center.Y - player.Center.Y) < NPC.sHeight * 2)
                             {
-                                int NpcStatusLevel = Main.npc[n].GetGlobalNPC<NpcMod>().NpcStatus.Level2,
-                                    NpcBaseLevel = Main.npc[n].GetGlobalNPC<NpcMod>().NpcStatus.Level;
+                                NpcMod npcmod = Main.npc[n].GetGlobalNPC<NpcMod>();
+                                int NpcStatusLevel = npcmod.NpcStatus.Level2,
+                                    NpcBaseLevel = npcmod.NpcStatus.Level;
                                 if (Level2 < NpcStatusLevel)
                                 {
                                     Level2 = NpcStatusLevel;
@@ -456,32 +457,56 @@ namespace NExperience
                 NPC n = npc;
                 if (n.realLife != -1)
                     n = Main.npc[n.realLife];
-                int SpawnLevel = Base.MobSpawnLevel(n);
-                if (SpawnLevel == -1 && npc.target > -1)
+                if (MainMod.EverythingHasMyLevel)
                 {
-                    int MinLevel = Main.player[npc.target].GetModPlayer<PlayerMod>().BiomeMinLv, MaxLevel = Main.player[npc.target].GetModPlayer<PlayerMod>().BiomeMaxLv;
-                    SpawnLevel = Main.rand.Next(MinLevel, MaxLevel + 1);
+                    int SpawnLevel = 1;
+                    float ClosestDistance = float.MaxValue;
+                    for(int p = 0; p < 255; p++)
+                    {
+                        if (Main.player[p].active)
+                        {
+                            float Distance = Main.player[p].Distance(npc.Center);
+                            if(Distance < ClosestDistance)
+                            {
+                                SpawnLevel = PlayerMod.GetPlayerLevel(Main.player[p], MainMod.LevelCapping);
+                                ClosestDistance = Distance;
+                            }
+                        }
+                    }
+                    Level = SpawnLevel;
                 }
-                Level = SpawnLevel;
+                else
+                {
+                    int SpawnLevel = Base.MobSpawnLevel(n);
+                    if (SpawnLevel == -1 && npc.target > -1)
+                    {
+                        int MinLevel = Main.player[npc.target].GetModPlayer<PlayerMod>().BiomeMinLv, MaxLevel = Main.player[npc.target].GetModPlayer<PlayerMod>().BiomeMaxLv;
+                        SpawnLevel = Main.rand.Next(MinLevel, MaxLevel + 1);
+                    }
+                    Level = SpawnLevel;
+                }
                 //if(Main.netMode > 0) NetPlayMod.SyncNPCLevels(npc.whoAmI, -1, Main.myPlayer);
                 IsHardmodeMonster = NpcMod.IsPreHardmodeMonster(npc);
                 HealthChangePercentage = (float)OriginalHealth / npc.lifeMax;
             }
             Level2 = GetLevelScale(npc, Level);
-            if (npc.type == Terraria.ID.NPCID.CultistArcherBlue || npc.type == Terraria.ID.NPCID.CultistDevote)
+            if (!MainMod.EverythingHasMyLevel)
             {
-                for (int p = 0; p < 255; p++)
+                if (npc.type == Terraria.ID.NPCID.CultistArcherBlue || npc.type == Terraria.ID.NPCID.CultistDevote)
                 {
-                    if (Main.player[p].active)
+                    for (int p = 0; p < 255; p++)
                     {
-                        int PlayerLevel = Main.player[p].GetModPlayer<PlayerMod>().GetGameModeInfo.Level;
-                        if(PlayerLevel < Level2)
-                            Level2 = PlayerLevel;
+                        if (Main.player[p].active)
+                        {
+                            int PlayerLevel = Main.player[p].GetModPlayer<PlayerMod>().GetGameModeInfo.Level;
+                            if (PlayerLevel < Level2)
+                                Level2 = PlayerLevel;
+                        }
                     }
                 }
+                if (npc.townNPC)
+                    Level2 = MainMod.LastHighestLeveledNpc;
             }
-            if (npc.townNPC)
-                Level2 = MainMod.LastHighestLeveledNpc;
             npc.knockBackResist = OriginalKB;
             npc.lifeMax = OriginalHealth;
             ProjDamageMult = 1f;
@@ -534,6 +559,8 @@ namespace NExperience
 
         public int GetLevelScale(NPC npc, int DefaultLevel)
         {
+            if (MainMod.EverythingHasMyLevel)
+                return DefaultLevel;
             bool CanScale = false;
             if (MainMod.Playthrough1dot5OnEndgame && NPC.downedMoonlord)
             {

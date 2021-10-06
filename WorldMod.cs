@@ -67,7 +67,6 @@ namespace NExperience
 
         public override void PreUpdate()
         {
-            TileMod.ResetBrokenTilesList();
             UpdateWorldMobRebirthStatus();
         }
 

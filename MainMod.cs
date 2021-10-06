@@ -16,7 +16,7 @@ namespace NExperience
     {
         public static string FixedGameMode { get { return WorldMod.WorldGameMode; } }
         public static bool LevelCapping = false, MobDefenseConvertToHealth = false, ShowExpAsPercentage = true, InfiniteLeveling = false, PotionsForSale = false, CapLevelOnInfiniteLeveling = false, BossesAsToughasMe = false, FullRegenOnLevelUp = false, Playthrough1dot5OnEndgame = false,
-            BuffPreHardmodeEnemiesOnHardmode = false, ZombiesDropsTombstones = true, DisableModEnemies = false, LevelInfoOnScreenCorner = false, BiomeTextFades = false, ItemStatusCapper = false, AllowManaBoosts = false;
+            BuffPreHardmodeEnemiesOnHardmode = false, ZombiesDropsTombstones = true, DisableModEnemies = false, LevelInfoOnScreenCorner = false, BiomeTextFades = false, ItemStatusCapper = false, AllowManaBoosts = false, EverythingHasMyLevel = false;
         public static bool TestMultiplayerSync = false;
         private static Dictionary<string, GameModeBase> GameModeList = new Dictionary<string, GameModeBase>();
         public static Texture2D LevelingArrow, LevelReductionArrow, StatusTextButtonTexture;
@@ -204,6 +204,11 @@ namespace NExperience
             if (LuckValue == 0)
                 return false;
             return Main.rand.NextFloat() < LuckValue / LuckChance;
+        }
+
+        public override void PreUpdateEntities()
+        {
+            TileMod.ResetBrokenTilesList();
         }
 
         public override void MidUpdatePlayerNPC()
@@ -672,13 +677,13 @@ namespace NExperience
                 return "Underworld";
             bool Underground = player.ZoneDirtLayerHeight;
             bool Cavern = player.ZoneRockLayerHeight;
-            string Affix = "", Suffix = "";
+            string Preffix = "", Suffix = "";
             if (player.ZoneCorrupt)
-                Affix = "Corrupt";
+                Preffix = "Corrupt";
             else if (player.ZoneCrimson)
-                Affix = "Crimson";
+                Preffix = "Crimson";
             else if (player.ZoneHoly)
-                Affix = "Hallow";
+                Preffix = "Hallow";
             if (player.ZoneDungeon)
             {
                 Suffix = "Dungeon";
@@ -753,7 +758,7 @@ namespace NExperience
             }
             if (PlayerMod.IsPlayerInInvasionPosition(player))
                 Suffix += " (Contested)";
-            return Affix + (Affix != "" ? " " : "") + Suffix;
+            return Preffix + (Preffix != "" ? " " : "") + Suffix;
         }
 
         public static void TriggerLuckyClovers(Vector2 Position, bool VeryLucky = false)
@@ -921,7 +926,7 @@ namespace NExperience
             return "";
         }
 
-        public override void HandlePacket(System.IO.BinaryReader reader, int whoAmI)
+        public override void HandlePacket(BinaryReader reader, int whoAmI)
         {
             NetPlayMod.ReceivedMessages(reader, whoAmI);
         }

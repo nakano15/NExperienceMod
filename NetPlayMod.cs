@@ -62,12 +62,16 @@ namespace NExperience
                     break;
                 case MessageType.ReceiveExp:
                     {
+                        int PlayerID = (int)reader.ReadByte();
                         int Exp = reader.ReadInt32();
                         ExpReceivedPopText.ExpSource source = (ExpReceivedPopText.ExpSource)reader.ReadByte();
                         if (Main.netMode == 1)
-                            Main.player[Main.myPlayer].GetModPlayer<PlayerMod>().GetExp(Exp, source, true, null);
+                        {
+                            if(PlayerID == Main.myPlayer)
+                                Main.player[Main.myPlayer].GetModPlayer<PlayerMod>().GetExp(Exp, source, true, null);
+                        }
                         else if (Main.netMode == 2)
-                            SendExpToPlayer(Me, Exp, source, -1);
+                            SendExpToPlayer(PlayerID, Exp, source, Me);
                     }
                     break;
                 case MessageType.SendNpcLevel:
@@ -372,6 +376,7 @@ namespace NExperience
                 return;
             ResetPacket();
             MainMod.packet.Write((byte)MessageType.ReceiveExp);
+            MainMod.packet.Write((byte)PlayerID);
             MainMod.packet.Write(Exp);
             MainMod.packet.Write((byte)source);
             MainMod.packet.Send(PlayerID, FromWho);

@@ -71,7 +71,10 @@ namespace NExperience.GameModes
             if (Level < 0)
                 Level = 0;
             //Main.NewText("Generated reward for level " + (int)Level + " and It gave " + (Difficulty * 100) + "% exp reward.");
-            return (int)(RegularRPGMaxExpTable[(int)(Level)] * Difficulty);
+            int Exp = (int)(RegularRPGMaxExpTable[(int)(Level)] * Difficulty);
+            //if (source == ExpReceivedPopText.ExpSource.Extractinator)
+            //    Exp = (int)(Exp * 0.1f);
+            return Exp;
         }
 
         public void FormulaCreator()
@@ -899,77 +902,72 @@ namespace NExperience.GameModes
         public override void NpcStatus(NPC npc, GameModeData data)
         {
             int LifeMax = npc.lifeMax, Damage = npc.damage, Defense = npc.defense;
-            for (int LevelCheck = 0; LevelCheck < 2; LevelCheck++)
+
+            npc.lifeMax = LifeMax;
+            npc.damage = Damage;
+            npc.defense = Defense;
+            data.ProjDamageMult = 1f;
+            float Level = data.Level2;
+            if (IsSoftRPGMode)
             {
-                npc.lifeMax = LifeMax;
-                npc.damage = Damage;
-                npc.defense = Defense;
-                data.ProjDamageMult = 1f;
-                float Level = (LevelCheck == 0 ? data.Level : data.Level2);
-                if (IsSoftRPGMode)
+                Level++;
+                Level *= 0.5f;
+            }
+            data.ProjDamageMult += Level * 0.1f;
+            npc.damage += (int)(npc.damage * Level * 0.1f);
+            npc.defense += (int)(npc.defense * Level * 0.1f);
+            if (npc.lifeMax > 5)
+            {
+                npc.lifeMax += (int)(npc.lifeMax * Level * 0.1f);
+            }
+            if (IsHardcoreRPGMode)
+            {
+                if (npc.lifeMax > 5) npc.lifeMax += (int)(npc.lifeMax * 0.55f);
+                npc.damage += (int)(npc.damage * 0.45f);
+                npc.defense += (int)(npc.defense * 0.45f);
+                data.ProjDamageMult += data.ProjDamageMult * 0.45f;
+            }
+            if (Level > 75 && Level <= 100)
+            {
+                if (npc.lifeMax > 5) npc.lifeMax += (int)(npc.lifeMax * ((Level - 75) * 0.03f));
+                npc.damage += (int)(npc.damage * ((Level - 75) * 0.03f));
+                npc.defense += (int)(npc.defense * ((Level - 75) * 0.03f));
+                data.ProjDamageMult += (int)(data.ProjDamageMult * ((Level - 75) * 0.03f));
+            }
+            else if (PosLevel100Scale)
+            {
+                if (Level > 100 && Level <= 150)
                 {
-                    Level++;
-                    Level *= 0.5f;
+                    if (npc.lifeMax > 5) npc.lifeMax += (int)(npc.lifeMax * 0.75f) + (int)(npc.lifeMax * ((Level - 100) * 0.05f));
+                    npc.damage += (int)(npc.damage * 0.75f) + (int)(npc.damage * ((Level - 100) * 0.05f));
+                    npc.defense += (int)(npc.defense * 0.75f) + (int)(npc.defense * ((Level - 100) * 0.05f));
+                    data.ProjDamageMult += (int)(data.ProjDamageMult * 0.75f) + (int)(data.ProjDamageMult * ((Level - 100) * 0.05f));
                 }
-                data.ProjDamageMult += Level * 0.1f;
-                npc.damage += (int)(npc.damage * Level * 0.1f);
-                npc.defense += (int)(npc.defense * Level * 0.1f);
-                if (npc.lifeMax > 5)
+                else if (Level > 150)
                 {
-                    npc.lifeMax += (int)(npc.lifeMax * Level * 0.1f);
-                }
-                if (IsHardcoreRPGMode)
-                {
-                    if (npc.lifeMax > 5) npc.lifeMax += (int)(npc.lifeMax * 0.55f);
-                    npc.damage += (int)(npc.damage * 0.45f);
-                    npc.defense += (int)(npc.defense * 0.45f);
-                    data.ProjDamageMult += data.ProjDamageMult * 0.45f;
-                }
-                if (Level > 75 && Level <= 100)
-                {
-                    if (npc.lifeMax > 5) npc.lifeMax += (int)(npc.lifeMax * ((Level - 75) * 0.03f));
-                    npc.damage += (int)(npc.damage * ((Level - 75) * 0.03f));
-                    npc.defense += (int)(npc.defense * ((Level - 75) * 0.03f));
-                    data.ProjDamageMult += (int)(data.ProjDamageMult * ((Level - 75) * 0.03f));
-                }
-                else if (PosLevel100Scale)
-                {
-                    if (Level > 100 && Level <= 150)
-                    {
-                        if (npc.lifeMax > 5) npc.lifeMax += (int)(npc.lifeMax * 0.75f) + (int)(npc.lifeMax * ((Level - 100) * 0.05f));
-                        npc.damage += (int)(npc.damage * 0.75f) + (int)(npc.damage * ((Level - 100) * 0.05f));
-                        npc.defense += (int)(npc.defense * 0.75f) + (int)(npc.defense * ((Level - 100) * 0.05f));
-                        data.ProjDamageMult += (int)(data.ProjDamageMult * 0.75f) + (int)(data.ProjDamageMult * ((Level - 100) * 0.05f));
-                    }
-                    else if (Level > 150)
-                    {
-                        if (npc.lifeMax > 5) npc.lifeMax += (int)(npc.lifeMax * 0.75f) + (int)(npc.lifeMax * 0.5f) + (int)(npc.lifeMax * ((Level - 150) * 0.05f));
-                        npc.damage += (int)(npc.damage * 0.75f) + (int)(npc.damage * 0.5f) + (int)(npc.damage * ((Level - 150) * 0.05f));
-                        npc.defense += (int)(npc.defense * 0.75f) + (int)(npc.defense * 0.5f) + (int)(npc.defense * ((Level - 150) * 0.05f));
-                        data.ProjDamageMult += (int)(data.ProjDamageMult * 0.75f) + (int)(data.ProjDamageMult * 0.5f) + (int)(data.ProjDamageMult * ((Level - 150) * 0.05f));
-                    }
-                }
-                if (Main.bloodMoon && BloodmoonStatusBoost)
-                {
-                    if (npc.lifeMax > 5) npc.lifeMax += (int)(npc.lifeMax * 1.2f);
-                    npc.damage += (int)(npc.damage * 1.2f);
-                    npc.defense += (int)(npc.defense * 1.2f);
-                    data.ProjDamageMult += (int)(data.ProjDamageMult * 1.2f);
-                }
-                if (LevelCheck == 0)
-                {
-                    int Exp = npc.lifeMax + (npc.damage + npc.defense) * 8;
-                    for (int l = 30; l < Level; l += 30)
-                    {
-                        Exp += (int)(Exp * (Level - l) * 0.01f);
-                    }
-                    if (IsSoftRPGMode)
-                        Exp *= 2;
-                    if (Level < 60)
-                        Exp -= (int)(Exp * ((60 - Level) * 0.011666666666667f));
-                    data.Exp = Exp;
+                    if (npc.lifeMax > 5) npc.lifeMax += (int)(npc.lifeMax * 0.75f) + (int)(npc.lifeMax * 0.5f) + (int)(npc.lifeMax * ((Level - 150) * 0.05f));
+                    npc.damage += (int)(npc.damage * 0.75f) + (int)(npc.damage * 0.5f) + (int)(npc.damage * ((Level - 150) * 0.05f));
+                    npc.defense += (int)(npc.defense * 0.75f) + (int)(npc.defense * 0.5f) + (int)(npc.defense * ((Level - 150) * 0.05f));
+                    data.ProjDamageMult += (int)(data.ProjDamageMult * 0.75f) + (int)(data.ProjDamageMult * 0.5f) + (int)(data.ProjDamageMult * ((Level - 150) * 0.05f));
                 }
             }
+            if (Main.bloodMoon && BloodmoonStatusBoost)
+            {
+                if (npc.lifeMax > 5) npc.lifeMax += (int)(npc.lifeMax * 1.2f);
+                npc.damage += (int)(npc.damage * 1.2f);
+                npc.defense += (int)(npc.defense * 1.2f);
+                data.ProjDamageMult += (int)(data.ProjDamageMult * 1.2f);
+            }
+            int Exp = npc.lifeMax + (npc.damage + npc.defense) * 8;
+            for (int l = 30; l < Level; l += 30)
+            {
+                Exp += (int)(Exp * (Level - l) * 0.01f);
+            }
+            if (IsSoftRPGMode)
+                Exp *= 2;
+            if (Level < 60)
+                Exp -= (int)(Exp * ((60 - Level) * 0.011666666666667f));
+            data.Exp = Exp;
             if (WorldMod.IsDeathMode)
                 npc.defense = Defense;
         }

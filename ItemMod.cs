@@ -54,24 +54,30 @@ namespace NExperience
 
         public override void ExtractinatorUse(int extractType, ref int resultType, ref int resultStack)
         {
-            foreach (int p in PlayerMod.GetPlayerTeamMates(Main.player[Main.myPlayer]))
+            if (Main.netMode < 2)
             {
-                Main.player[p].GetModPlayer<PlayerMod>().GetExpReward(5, 0.005f * resultStack, ExpReceivedPopText.ExpSource.Extractinator, p == Main.myPlayer);
+                foreach (int p in PlayerMod.GetPlayerTeamMates(Main.player[Main.myPlayer]))
+                {
+                    Main.player[p].GetModPlayer<PlayerMod>().GetExpReward(5, 0.001f * resultStack, ExpReceivedPopText.ExpSource.Extractinator, p == Main.myPlayer);
+                }
             }
         }
 
         public override void OnCraft(Item item, Recipe recipe)
         {
-            float ValueStack = item.value * item.stack;
-            foreach(Item i in recipe.requiredItem)
+            if (Main.netMode < 2)
             {
-                ValueStack += (i.value * i.stack) / 2;
-            }
-            if (ValueStack > 0 && (item.type < Terraria.ID.ItemID.CopperCoin || item.type > Terraria.ID.ItemID.PlatinumCoin))
-            {
-                foreach (int p in PlayerMod.GetPlayerTeamMates(Main.player[Main.myPlayer]))
+                float ValueStack = item.value * item.stack;
+                foreach (Item i in recipe.requiredItem)
                 {
-                    Main.player[p].GetModPlayer<PlayerMod>().GetExpReward(5, 0.05f * (ValueStack / 1000000), ExpReceivedPopText.ExpSource.Crafting, p == Main.myPlayer);
+                    ValueStack += (i.value * i.stack) / 2;
+                }
+                if (ValueStack > 0 && (item.type < Terraria.ID.ItemID.CopperCoin || item.type > Terraria.ID.ItemID.PlatinumCoin))
+                {
+                    foreach (int p in PlayerMod.GetPlayerTeamMates(Main.player[Main.myPlayer]))
+                    {
+                        Main.player[p].GetModPlayer<PlayerMod>().GetExpReward(5, 0.05f * (ValueStack / 1000000), ExpReceivedPopText.ExpSource.Crafting, p == Main.myPlayer);
+                    }
                 }
             }
         }
