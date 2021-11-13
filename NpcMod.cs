@@ -34,9 +34,9 @@ namespace NExperience
             if (npc.type == Terraria.ID.NPCID.EyeofCthulhu || npc.type == Terraria.ID.NPCID.SkeletronHead || npc.type == Terraria.ID.NPCID.Retinazer ||
                 npc.type == Terraria.ID.NPCID.Spazmatism || npc.type == Terraria.ID.NPCID.TheDestroyer || npc.type == Terraria.ID.NPCID.SkeletronPrime)
                 HasNocturnalBossSpawned = true;
-            MainMod.NpcProjSpawnPos = npc.whoAmI;
             npc.damage = npc.defDamage;
             npc.defense = npc.defDefense;
+            MainMod.NpcProjSpawnPos = npc.whoAmI;
             return true;
         }
 

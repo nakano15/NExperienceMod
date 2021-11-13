@@ -34,9 +34,33 @@ namespace NExperience
             OrbMagicFindPoints = 0,
             LifeCrystalMagicPoints = 0,
             LifeFruitMagicPoints = 0;
+        private bool Only1HPMode = false;
+        public bool Is1HPMode { get { return Only1HPMode; } }
 
         public bool ZoneGraveyard { get { return biome[0]; } set { biome[0] = value; } }
         public bool ZoneDeep { get { return biome[1]; } set { biome[1] = value; } }
+
+        public void Set1HPMode(bool Enable)
+        {
+            if(Enable != Only1HPMode)
+            {
+                if (Enable)
+                {
+                    player.statLifeMax2 = 1;
+                }
+                else
+                {
+                    player.statLife = 1;
+                    int SicknessTime = 30 * 60 - player.potionDelay;
+                    if(SicknessTime > 0)
+                    {
+                        player.potionDelay = 30 * 60;
+                        player.AddBuff(21, player.potionDelay);
+                    }
+                }
+                Only1HPMode = Enable;
+            }
+        }
 
         public GameModeData GetGameModeData(string GameModeID)
         {
@@ -475,6 +499,12 @@ namespace NExperience
         public override void PostUpdateEquips()
         {
             GetGameModeInfo.UpdatePlayer(player);
+            if (Only1HPMode)
+            {
+                player.statLifeMax2 = 1;
+                if (player.statLife > player.statLifeMax2)
+                    player.statLife = player.statLifeMax2;
+            }
         }
 
         public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit)
@@ -548,6 +578,7 @@ namespace NExperience
             tag.Add("ShadowOrbMagicFind", (int)OrbMagicFindPoints);
             tag.Add("LifeCrystalMagicFind", (int)LifeCrystalMagicPoints);
             tag.Add("LifeFruitMagicFind", (int)LifeFruitMagicPoints);
+            tag.Add("1HPMode", Only1HPMode);
             int Count = 0;
             foreach (string g in GameModes.Keys.ToArray())
             {
@@ -571,6 +602,10 @@ namespace NExperience
                 OrbMagicFindPoints = (uint)tag.GetInt("ShadowOrbMagicFind");
                 LifeCrystalMagicPoints = (uint)tag.GetInt("LifeCrystalMagicFind");
                 LifeFruitMagicPoints = (uint)tag.GetInt("LifeFruitMagicFind");
+            }
+            if(ModVersion >= 5)
+            {
+                Only1HPMode = tag.GetBool("1HPMode");
             }
             for (int g = 0; g < GameModeCount; g++)
             {

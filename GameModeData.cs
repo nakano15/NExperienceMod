@@ -361,7 +361,7 @@ namespace NExperience
             SavedStatusMod.ApplyStatus(player);
             CalculatePlayerStatusChangeBasedOnEquipment(player);
             GetRebirthStatus().Update(player, RebirthLevel);
-            if (!player.dead)
+            if (!player.dead && !player.GetModPlayer<PlayerMod>().Is1HPMode)
             {
                 if (StatusChanged)
                 {

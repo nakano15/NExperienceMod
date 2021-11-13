@@ -120,11 +120,11 @@ namespace NExperience
                 {
                     Open = false;
                 }
-                if(SelectedGameMode > -1)
+                if (SelectedGameMode > -1)
                 {
                     Vector2 WikiButtonPosition = SetButtonPosition;
                     WikiButtonPosition.Y -= 30;
-                    if(DrawTextButton("Wiki", WikiButtonPosition, Color.White, 1f))
+                    if (DrawTextButton("Wiki", WikiButtonPosition, Color.White, 1f))
                     {
                         GameModeBase gmb = MainMod.GetGameMode(GameModeIds[SelectedGameMode]);
                         string PageID = gmb.WikiPageID;
@@ -149,6 +149,26 @@ namespace NExperience
                     else
                     {
                         NetPlayMod.SendDinokModeSwitch(!WorldMod.IsDeathMode);
+                    }
+                }
+                SetButtonPosition.X += 200;
+                bool OneHPModeState;
+                if (DrawTextButton("1 HP Mode [" + ((OneHPModeState = Main.LocalPlayer.GetModPlayer<PlayerMod>().Is1HPMode) ? "ON" : "OFF") + "]", SetButtonPosition, Color.White, 0))
+                {
+                    Open = false;
+                    Main.NewText("1 HP Mode is " + (!OneHPModeState ?
+                        "ON! Your character maximum health is now 1." :
+                        "OFF! Your character maximum health can now go past 1."), Color.OrangeRed);
+                    Main.LocalPlayer.GetModPlayer<PlayerMod>().Set1HPMode(!OneHPModeState);
+                    Main.PlaySound(Terraria.ID.SoundID.PlayerHit, Main.player[Main.myPlayer].Center, 0);
+                    if (Main.netMode > 0)
+                    {
+                        NetMessage.SendData(25, -1, Main.myPlayer, Terraria.Localization.NetworkText.FromLiteral(Main.LocalPlayer.name + " has " + (!OneHPModeState ? "enabled" : "disabled") + " 1 HP Mode."),
+                            225, 0, 0, 255);
+                    }
+                    else
+                    {
+                        //NetPlayMod.SendDinokModeSwitch(!WorldMod.IsDeathMode);
                     }
                 }
             }

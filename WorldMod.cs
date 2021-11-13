@@ -72,7 +72,7 @@ namespace NExperience
 
         public override void TileCountsAvailable(int[] tileCounts)
         {
-            InGraveyardRegion = tileCounts[Terraria.ID.TileID.Tombstones] * 4 >= 48;
+            InGraveyardRegion = tileCounts[Terraria.ID.TileID.Tombstones] >= 12;
         }
 
         public override Terraria.ModLoader.IO.TagCompound Save()

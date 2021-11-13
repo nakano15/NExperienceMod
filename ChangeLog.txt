@@ -1,20 +1,5 @@
-﻿You can now transmutate hardmode bars into their variants, like from Cobalt until Titanium, using the Alchemy Table.
-	For the transmutation, you need 2 bars of the tier you want to convert, and a pixie dust, to get a bar of the other tier.
-Crafting item is now affected by luck.
-	Lucky Strike does:
-		If It's a weapon, gives you a guaranted good reforge prefix.
-		If it's not, gives you an extra of that item.
-	Very Lucky Strike does:
-		If It's a weapon, gives you the best possible reforge prefix for that weapon.
-		If it's not, gives you 7 more of that item.
-Added Ascension RPG Game Mode.
-Expanded the description of the game modes.
-Regular RPG Mode
-	Nerfed exp given by Dye plants.
-Removed the Luck Up! text from breaking tiles.
-Fixed a number of multiplayer issues.
-	Multiplayer still has bugs, but should be more tolerable now.
-Added game mode option of setting all enemies to your level.
-	On multiplayer, the level set on the monster will be based on the closest player.
-	With Biome Level Capper turned on, the monsters level will be based on the capped level of the player.
-Nerfed extractinator exp reward.
+﻿Changed how Knockback Power is calculated on Classic and Ascension RPG Modes.
+Added 1 HP Mode.
+	1 HP Mode will cap your character max health at 1 when enabled.
+	The setting is individual, so the player who enables it will have the health capped.
+	Upon disabling the game mode, the character health will be set to 1, and there will be a 30 seconds potion sickness, so be careful of where you disable the setting.

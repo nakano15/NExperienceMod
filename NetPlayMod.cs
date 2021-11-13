@@ -334,6 +334,17 @@ namespace NExperience
                             color.R, color.G, color.B, color.A);
                     }
                     break;
+
+                case MessageType.Send1HPMode:
+                    {
+                        byte Player = reader.ReadByte();
+                        bool Enabled = reader.ReadBoolean();
+                        Main.player[Player].GetModPlayer<PlayerMod>().Set1HPMode(Enabled);
+                        if (Main.netMode != 2)
+                            return;
+                        Send1HPModeStatus(Main.player[Player], Me);
+                    }
+                    break;
             }
         }
 
@@ -521,7 +532,18 @@ namespace NExperience
             packet.Send(-1, IgnorePlayer);
         }
 
-        public enum MessageType
+        public static void Send1HPModeStatus(Player player, int IgnorePlayer = -1)
+        {
+            if (Main.netMode == 0)
+                return;
+            ResetPacket();
+            packet.Write((byte)MessageType.Send1HPMode);
+            packet.Write((byte)player.whoAmI);
+            packet.Write(player.GetModPlayer<PlayerMod>().Is1HPMode);
+            packet.Send(-1, IgnorePlayer);
+        }
+
+        public enum MessageType : byte
         {
             SendPlayerLevel,
             SendPlayerStatus,
@@ -534,7 +556,8 @@ namespace NExperience
             ChangeGameMode,
             SendPlayerHealth,
             SendNpcInfos,
-            SendMessageToServer
+            SendMessageToServer,
+            Send1HPMode
         }
     }
 }

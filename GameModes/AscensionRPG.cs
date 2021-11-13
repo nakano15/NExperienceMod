@@ -118,7 +118,7 @@ namespace NExperience.GameModes
             //Potence
             mod.MeleeCritMult = mod.RangedCritMult = mod.MagicCritMult = 0.5f + Level * 0.005f;
             mod.MeleeCritSum = mod.RangedCritSum = mod.MagicCritSum = Potence * 0.001f;
-            mod.KnockbackMult = Potence * 0.001f;
+            mod.KnockbackSum = 1f + Potence * 0.01f;
             mod.SummonCountSum += Potence * 0.025f;
             //Velocity
             float SpeedMult = 1f + Level * 0.005f;

@@ -21,7 +21,7 @@ namespace NExperience
         private static Dictionary<string, GameModeBase> GameModeList = new Dictionary<string, GameModeBase>();
         public static Texture2D LevelingArrow, LevelReductionArrow, StatusTextButtonTexture;
         public static int LastMinLevel, LastMaxLevel;
-        public const int ModVersion = 4;
+        public const int ModVersion = 5;
         public static int NpcProjSpawnPos = -1;
         public static float DefaultExpRate = 1f;
         public static float ExpRate = 1f;

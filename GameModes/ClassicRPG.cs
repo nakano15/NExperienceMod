@@ -80,7 +80,7 @@ namespace NExperience.GameModes
             StatusMultiplier = !Main.hardMode ? 0.003f : 0.001f;
             mod.MeleeSpeedSum += StatusMultiplier * AttackSpeedBonus;
             mod.MoveSpeedSum += StatusMultiplier * MovementSpeedBonus;
-            mod.KnockbackMult += StatusMultiplier * KnockbackBonus;
+            mod.KnockbackSum += StatusMultiplier * KnockbackBonus;
             //
             mod.ArmorPenetrationMult += StatusProgressionPerLevel * Level;
         }
