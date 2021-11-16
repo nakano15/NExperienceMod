@@ -46,6 +46,7 @@ namespace NExperience
             _packet = mod.GetPacket();
         }
         public static MainMod mod;
+        public static Mod TerraClasses;
         public static bool WeekendEventUp
         {
             get
@@ -787,14 +788,15 @@ namespace NExperience
             }
         }
 
-        /*public override void PostSetupContent()
+        public override void PostSetupContent()
         {
-            int[] Keys = Main.npcLifeBytes.Keys.ToArray();
+            TerraClasses = ModLoader.GetMod("TerraClasses");
+            /*int[] Keys = Main.npcLifeBytes.Keys.ToArray();
             foreach (int key in Keys)
             {
                 Main.npcLifeBytes[key] = 4;
-            }
-        }*/
+            }*/
+        }
 
         public override bool HijackSendData(int whoAmI, int msgType, int remoteClient, int ignoreClient, NetworkText text, int number, float number2, float number3, float number4, int number5, int number6, int number7)
         {

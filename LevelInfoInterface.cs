@@ -67,7 +67,20 @@ namespace NExperience
             {
                 Main.player[Main.myPlayer].mouseInterface = true;
                 if (Main.mouseLeft && Main.mouseLeftRelease)
+                {
                     Open = !Open;
+                    if (MainMod.TerraClasses != null)
+                    {
+                        if (Open)
+                        {
+                            MainMod.TerraClasses.Call(new string[] { "hidehud" });
+                        }
+                        else
+                        {
+                            MainMod.TerraClasses.Call(new string[] { "showhud" });
+                        }
+                    }
+                }
             }
             else
             {

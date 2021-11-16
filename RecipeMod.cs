@@ -42,7 +42,7 @@ namespace NExperience
                     Player player = Main.player[Main.myPlayer];
                     while (item.stack > item.maxStack)
                     {
-                        int ToDiscount = item.maxStack - item.stack;
+                        int ToDiscount = item.stack;
                         if (ToDiscount > item.maxStack)
                             ToDiscount = item.maxStack;
                         Item.NewItem(player.getRect(), item.type, ToDiscount);
@@ -111,7 +111,7 @@ namespace NExperience
                     Player player = Main.player[Main.myPlayer];
                     while (item.stack > item.maxStack)
                     {
-                        int ToDiscount = item.maxStack - item.stack;
+                        int ToDiscount = item.stack;
                         if (ToDiscount > item.maxStack)
                             ToDiscount = item.maxStack;
                         Item.NewItem(player.getRect(), item.type, ToDiscount);

@@ -1,5 +1,1 @@
-﻿Changed how Knockback Power is calculated on Classic and Ascension RPG Modes.
-Added 1 HP Mode.
-	1 HP Mode will cap your character max health at 1 when enabled.
-	The setting is individual, so the player who enables it will have the health capped.
-	Upon disabling the game mode, the character health will be set to 1, and there will be a 30 seconds potion sickness, so be careful of where you disable the setting.
+﻿Fixed a bug where when being very lucky on crafting an accessory, you could get absurd amount of it.
