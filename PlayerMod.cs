@@ -513,7 +513,7 @@ namespace NExperience
             {
                 damage += (int)(damage * CriticalDamageBonusMult);
             }
-            knockback += knockback * KbMult + KbSum;
+            knockback = (knockback + KbSum) * KbMult;
         }
 
         public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
@@ -522,7 +522,7 @@ namespace NExperience
             {
                 damage += GetCriticalDamageBonus(damage);
             }
-            knockback += knockback * KbMult + KbSum;
+            knockback = (knockback + KbSum) * KbMult;
         }
 
         public override void ModifyHitPvp(Item item, Player target, ref int damage, ref bool crit)

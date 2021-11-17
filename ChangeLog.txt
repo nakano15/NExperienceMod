@@ -1,1 +1,1 @@
-﻿Fixed a bug where when being very lucky on crafting an accessory, you could get absurd amount of it.
+﻿Fixed an issue where knockback power was way too good.
