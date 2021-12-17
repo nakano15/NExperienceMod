@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArcadeDungeon.cs" />
+    <Compile Include="Buffs\Terrified.cs" />
     <Compile Include="ConfigMod.cs" />
     <Compile Include="Effects\CloverEffect.cs" />
     <Compile Include="ExpReceivedPopText.cs" />
@@ -69,6 +70,7 @@
     <Compile Include="MainMod.cs" />
     <Compile Include="NetPlayMod.cs" />
     <Compile Include="NpcMod.cs" />
+    <Compile Include="NPCs\KrampusHunter.cs" />
     <Compile Include="NPCs\TenrohEripmav.cs" />
     <Compile Include="NPCs\HighVoodooDemon.cs" />
     <Compile Include="NPCs\HighDemon.cs" />
@@ -90,6 +92,7 @@
     <Compile Include="WorldMod.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Buffs\Terrified.png" />
     <Content Include="ChangeLog.txt" />
     <Content Include="Effects\LuckyClover.png" />
     <Content Include="Effects\VeryLuckyClover.png" />
@@ -97,6 +100,7 @@
     <Content Include="Interface\LevelReductionArrow.png" />
     <Content Include="Interface\StatusBtn.png" />
     <Content Include="Items\ResetPill.png" />
+    <Content Include="NPCs\KrampusHunter.png" />
     <Content Include="NPCs\NightBat.png" />
     <Content Include="NPCs\HighVoodooDemon.png" />
     <Content Include="NPCs\TenrohEripmav.png" />

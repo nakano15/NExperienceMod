@@ -308,7 +308,13 @@ namespace NExperience.GameModes
             {
                 float ExpMult = !Main.hardMode ? 0.01f : 0.005f;
                 if (Data.Exp == 0)
+                {
                     Data.Exp = (int)(Data.GetMaxExp() * ExpMult);
+                    if (NpcMod.IsOoAMob(npc.type))
+                    {
+                        Data.Exp = (int)(Data.Exp * 0.6);
+                    }
+                }
             }
         }
 

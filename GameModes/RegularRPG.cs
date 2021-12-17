@@ -617,7 +617,7 @@ namespace NExperience.GameModes
             {
                 Level = 90;
             }
-            else if (npc.type == 477 || npc.type == Terraria.ID.NPCID.MothronEgg || npc.type == Terraria.ID.NPCID.MothronSpawn) //Mothron
+            else if (npc.type == 477 || npc.type == NPCID.MothronEgg || npc.type == NPCID.MothronSpawn) //Mothron
             {
                 Level = 100;
             }
@@ -645,15 +645,15 @@ namespace NExperience.GameModes
             {
                 Level = 70;
             }
-            else if (npc.type == 4 || npc.type == Terraria.ID.NPCID.ServantofCthulhu)
+            else if (npc.type == 4 || npc.type == NPCID.ServantofCthulhu)
             {
                 Level = 15;
             }
-            else if (npc.type == 13 || npc.type == 14 || npc.type == 15 || npc.type == 266 || npc.type == Terraria.ID.NPCID.Creeper)
+            else if (npc.type == 13 || npc.type == 14 || npc.type == 15 || npc.type == 266 || npc.type == NPCID.Creeper)
             {
                 Level = 25;
             }
-            else if (npc.type == 35 || npc.type == Terraria.ID.NPCID.SkeletronHand)
+            else if (npc.type == 35 || npc.type == NPCID.SkeletronHand)
             {
                 Level = 40;
             }
@@ -715,33 +715,33 @@ namespace NExperience.GameModes
             }
             switch (npc.type)
             {
-                case Terraria.ID.NPCID.DD2DarkMageT1:
-                case Terraria.ID.NPCID.DD2DarkMageT3:
-                case Terraria.ID.NPCID.DD2DrakinT2:
-                case Terraria.ID.NPCID.DD2DrakinT3:
-                case Terraria.ID.NPCID.DD2GoblinBomberT1:
-                case Terraria.ID.NPCID.DD2GoblinBomberT2:
-                case Terraria.ID.NPCID.DD2GoblinBomberT3:
-                case Terraria.ID.NPCID.DD2GoblinT1:
-                case Terraria.ID.NPCID.DD2GoblinT2:
-                case Terraria.ID.NPCID.DD2GoblinT3:
-                case Terraria.ID.NPCID.DD2JavelinstT1:
-                case Terraria.ID.NPCID.DD2JavelinstT2:
-                case Terraria.ID.NPCID.DD2JavelinstT3:
-                case Terraria.ID.NPCID.DD2KoboldFlyerT2:
-                case Terraria.ID.NPCID.DD2KoboldFlyerT3:
-                case Terraria.ID.NPCID.DD2KoboldWalkerT2:
-                case Terraria.ID.NPCID.DD2KoboldWalkerT3:
-                case Terraria.ID.NPCID.DD2LightningBugT3:
-                case Terraria.ID.NPCID.DD2OgreT2:
-                case Terraria.ID.NPCID.DD2OgreT3:
-                case Terraria.ID.NPCID.DD2SkeletonT1:
-                case Terraria.ID.NPCID.DD2SkeletonT3:
-                case Terraria.ID.NPCID.DD2WitherBeastT2:
-                case Terraria.ID.NPCID.DD2WitherBeastT3:
-                case Terraria.ID.NPCID.DD2WyvernT1:
-                case Terraria.ID.NPCID.DD2WyvernT2:
-                case Terraria.ID.NPCID.DD2WyvernT3:
+                case NPCID.DD2DarkMageT1:
+                case NPCID.DD2DarkMageT3:
+                case NPCID.DD2DrakinT2:
+                case NPCID.DD2DrakinT3:
+                case NPCID.DD2GoblinBomberT1:
+                case NPCID.DD2GoblinBomberT2:
+                case NPCID.DD2GoblinBomberT3:
+                case NPCID.DD2GoblinT1:
+                case NPCID.DD2GoblinT2:
+                case NPCID.DD2GoblinT3:
+                case NPCID.DD2JavelinstT1:
+                case NPCID.DD2JavelinstT2:
+                case NPCID.DD2JavelinstT3:
+                case NPCID.DD2KoboldFlyerT2:
+                case NPCID.DD2KoboldFlyerT3:
+                case NPCID.DD2KoboldWalkerT2:
+                case NPCID.DD2KoboldWalkerT3:
+                case NPCID.DD2LightningBugT3:
+                case NPCID.DD2OgreT2:
+                case NPCID.DD2OgreT3:
+                case NPCID.DD2SkeletonT1:
+                case NPCID.DD2SkeletonT3:
+                case NPCID.DD2WitherBeastT2:
+                case NPCID.DD2WitherBeastT3:
+                case NPCID.DD2WyvernT1:
+                case NPCID.DD2WyvernT2:
+                case NPCID.DD2WyvernT3:
                     {
                         int NpcLevel = 20 + (NPC.waveNumber - 1) * 6;
                         if (Terraria.GameContent.Events.DD2Event.ReadyForTier3)
@@ -751,7 +751,7 @@ namespace NExperience.GameModes
                         Level = NpcLevel;
                     }
                     break;
-                case Terraria.ID.NPCID.DD2EterniaCrystal:
+                case NPCID.DD2EterniaCrystal:
                     {
                         int NpcLevel = 20;
                         if (Terraria.GameContent.Events.DD2Event.ReadyForTier3)
@@ -761,7 +761,7 @@ namespace NExperience.GameModes
                         Level = NpcLevel;
                     }
                     break;
-                case Terraria.ID.NPCID.DD2Betsy:
+                case NPCID.DD2Betsy:
                     {
                         Level = 140;
                     }
@@ -967,6 +967,10 @@ namespace NExperience.GameModes
                 Exp *= 2;
             if (Level < 60)
                 Exp -= (int)(Exp * ((60 - Level) * 0.011666666666667f));
+            if (NpcMod.IsOoAMob(npc.type))
+            {
+                Exp = (int)(Exp * 0.6);
+            }
             data.Exp = Exp;
             if (WorldMod.IsDeathMode)
                 npc.defense = Defense;

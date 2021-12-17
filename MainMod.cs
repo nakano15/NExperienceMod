@@ -788,6 +788,20 @@ namespace NExperience
             }
         }
 
+        public static void SendChatMessage(string Message, Color color = default(Color))
+        {
+            if (color == default(Color))
+                color = Color.White;
+            if (Main.netMode == 0)
+            {
+                Main.NewText(Message, color);
+            }
+            else if (Main.netMode == 2)
+            {
+                NetMessage.BroadcastChatMessage(NetworkText.FromLiteral(Message), color);
+            }
+        }
+
         public override void PostSetupContent()
         {
             TerraClasses = ModLoader.GetMod("TerraClasses");

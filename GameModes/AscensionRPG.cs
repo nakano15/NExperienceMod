@@ -142,6 +142,10 @@ namespace NExperience.GameModes
                 npc.damage += 4 * Level;
             npc.defense = (int)(npc.defense * (0.5f + Data.Level * 0.01f + ComplexityLevel * 0.05f));
             Data.Exp = (int)(npc.lifeMax * 1.2);
+            if (NpcMod.IsOoAMob(npc.type))
+            {
+                Data.Exp = (int)(Data.Exp * 0.6);
+            }
         }
 
         public override void BiomeLevelRules(Player player, GameModeData Data, out int MinLevel, out int MaxLevel)

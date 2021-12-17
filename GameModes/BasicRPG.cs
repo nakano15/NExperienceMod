@@ -66,8 +66,15 @@ namespace NExperience.GameModes
 
         public override void NpcStatus(NPC npc, GameModeData data)
         {
-            if (npc.lifeMax > 5) data.Exp = ScaleStatusToLevel(npc.lifeMax, data.Level, true) -
+            if (npc.lifeMax > 5)
+            {
+                data.Exp = ScaleStatusToLevel(npc.lifeMax, data.Level, true) -
                     (int)(ScaleStatusToLevel(npc.damage, data.Level) - ScaleStatusToLevel(npc.defense, data.Level) * 0.5f);
+                if (NpcMod.IsOoAMob(npc.type))
+                {
+                    data.Exp = (int)(data.Exp * 0.6);
+                }
+            }
             int Level = data.Level2;
             float StatusBonus = Level * 0.1f;
             if (npc.lifeMax > 5) npc.lifeMax = ScaleStatusToLevel(npc.lifeMax, Level, true);

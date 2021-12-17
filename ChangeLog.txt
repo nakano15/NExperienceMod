@@ -1,1 +1,12 @@
-﻿Fixed an issue where knockback power was way too good.
+﻿Old One's Army monsters will now give 60% of their exp on all game modes except on Free Mode.
+Krampus Kidnapper now has a chance of appearing for those who did naughty deeds.
+	The game will let you know the nights Krampus Kidnapper will show up.
+	Differently from the original Krampus, this one is quite stealthy.
+	It will begin showing up if:
+		You killed Queen Bee, or start Hardmode (killed the Guide).
+	It will primarily hunt the closest player to it.
+		Hunted players that are hurt by it will receive the Terrified debuff, which greatly reduces mobility and attack power.
+		If a player is captured by it, the monster will despawn as the captured player despawns.
+	It will allow you early access to a number of items you would get only from Frost Moon events, they include:
+		Christmas Hook, Reindeer Bells and Baby Grinch Mischief Whistle.
+		And for joke's sake... Naughty Present.

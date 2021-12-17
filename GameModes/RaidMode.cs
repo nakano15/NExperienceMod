@@ -66,6 +66,10 @@ namespace NExperience.GameModes
             npc.knockBackResist *= 0.3f;
             //npc.knockBackResist -= npc.knockBackResist * Data.Level2 * 0.005f;
             Data.Exp = (int)(npc.lifeMax * Data.Level * 0.1f);
+            if (NpcMod.IsOoAMob(npc.type))
+            {
+                Data.Exp = (int)(Data.Exp * 0.6);
+            }
         }
 
         public override int MobSpawnLevel(NPC npc)
