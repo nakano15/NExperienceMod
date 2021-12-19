@@ -196,6 +196,7 @@ namespace NExperience.NPCs
             if (!BaggedPlayer)
             {
                 MainMod.SendChatMessage("You feel at ease now.", Color.Cyan);
+				NpcMod.CanSpawnKrampus = false;
             }
         }
 

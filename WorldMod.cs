@@ -68,22 +68,25 @@ namespace NExperience
 
         public override void PreUpdate()
         {
-            if (NpcMod.CanSpawnKrampus)
-            {
-                if (Main.dayTime)
-                {
-                    NpcMod.CanSpawnKrampus = false;
-                    MainMod.SendChatMessage("You feel at ease as day rises.", Microsoft.Xna.Framework.Color.Green);
-                }
-            }
-            else
-            {
-                if (Main.xMas && !Main.dayTime && Main.time == 0 && (Main.hardMode || NPC.downedQueenBee) && Main.rand.Next(5) == 0)
-                {
-                    NpcMod.CanSpawnKrampus = true;
-                    MainMod.SendChatMessage("You have a horrible feeling about this night...", Microsoft.Xna.Framework.Color.Red);
-                }
-            }
+			if(Main.netMode != 1)
+			{
+				if (NpcMod.CanSpawnKrampus)
+				{
+					if (Main.dayTime)
+					{
+						NpcMod.CanSpawnKrampus = false;
+						MainMod.SendChatMessage("You feel at ease as day rises.", Microsoft.Xna.Framework.Color.Green);
+					}
+				}
+				else
+				{
+					if (Main.xMas && !Main.dayTime && Main.time == 0 && (Main.hardMode || NPC.downedQueenBee) && Main.rand.Next(5) == 0)
+					{
+						NpcMod.CanSpawnKrampus = true;
+						MainMod.SendChatMessage("You have a horrible feeling about this night...", Microsoft.Xna.Framework.Color.Red);
+					}
+				}
+			}
             UpdateWorldMobRebirthStatus();
         }
 
