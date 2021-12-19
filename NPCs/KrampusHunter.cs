@@ -202,7 +202,7 @@ namespace NExperience.NPCs
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if(NpcMod.CanSpawnKrampus && !spawnInfo.water && !spawnInfo.playerInTown)
+            if(NpcMod.CanSpawnKrampus && !spawnInfo.water && !spawnInfo.playerInTown && !NPC.AnyNPCs(ModContent.NPCType<KrampusHunter>()))
             {
                 return 1f / 150;
             }
