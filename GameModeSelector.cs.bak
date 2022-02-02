@@ -152,7 +152,7 @@ namespace NExperience
                     }
                 }
                 SetButtonPosition.X += 200;
-				SetButtonPosition.Y -= 30;
+				SetButtonPosition.Y -= 30
                 bool OneHPModeState;
                 if (DrawTextButton("1 HP Mode [" + ((OneHPModeState = Main.LocalPlayer.GetModPlayer<PlayerMod>().Is1HPMode) ? "ON" : "OFF") + "]", SetButtonPosition, Color.White, 0))
                 {
